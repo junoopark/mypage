@@ -3,65 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API 연동 실습 — 박준우</title>
-  <meta name="description" content="FastAPI 백엔드 API를 호출하고 결과를 보여주는 연동 실습 페이지">
+  <title data-i18n="demo.title">API 연동 실습 — 박준우</title>
+  <meta name="description" content="FastAPI 백엔드 API를 호출하고 결과를 보여주는 연동 실습 페이지" data-i18n-attr="content:demo.desc">
+  <script src="js/theme-init.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="site-header">
-    <h1>API 연동 실습</h1>
-    <nav aria-label="페이지 이동">
-      <a href="index.html">소개</a>
-      <a href="demo.html" aria-current="page">API 연동 실습</a>
-    </nav>
+    <h1 data-i18n="demo.h1">API 연동 실습</h1>
+    <div class="header-right">
+      <nav aria-label="페이지 이동" data-i18n-attr="aria-label:nav.aria">
+        <a href="index.html" data-i18n="nav.home">소개</a>
+        <a href="demo.html" aria-current="page" data-i18n="nav.demo">API 연동 실습</a>
+      </nav>
+      <div class="controls">
+        <button id="theme-btn" type="button"><span class="ico" aria-hidden="true"></span><span class="lbl"></span></button>
+        <button id="lang-btn" type="button" data-i18n="lang.other" data-i18n-attr="aria-label:lang.aria">EN</button>
+      </div>
+    </div>
   </header>
 
   <main class="page">
-    <p class="lead">
+    <p class="lead" data-i18n-html="demo.lead">
       이 페이지는 <strong>Vercel</strong>에 배포된 화면이 <strong>Render</strong>의 FastAPI 서버를 호출해 결과를 보여줍니다.
     </p>
     <p class="endpoint">
-      API 서버: <code id="api-base"></code> ·
+      <span data-i18n="demo.apiServer">API 서버:</span> <code id="api-base"></code> ·
       <a id="docs-link" href="#" target="_blank" rel="noopener">Swagger UI (/docs)</a>
     </p>
 
-    <!-- 요청 상태 표시 (요청 중 / 성공 / 오류 / 서버 깨우는 중) -->
+    <!-- 요청 상태 표시 (요청 중 / 성공 / 오류 / 서버 깨우는 중). 문구는 demo.js 가 채운다 -->
     <p id="status" class="status" role="status" aria-live="polite">준비됨</p>
 
     <section class="panel">
-      <h2>1. 서버 상태 확인 <span class="method">GET /health</span></h2>
-      <button id="btn-health" type="button">호출하기</button>
-      <pre id="out-health" class="out" aria-label="서버 상태 응답">아직 호출하지 않았습니다.</pre>
+      <h2><span data-i18n="demo.p1.title">1. 서버 상태 확인</span> <span class="method">GET /health</span></h2>
+      <button id="btn-health" type="button" data-i18n="demo.call">호출하기</button>
+      <pre id="out-health" class="out" data-i18n="demo.out.empty" data-i18n-attr="aria-label:demo.out.healthAria">아직 호출하지 않았습니다.</pre>
     </section>
 
     <section class="panel">
-      <h2>2. 프로필 불러오기 <span class="method">GET /profile</span></h2>
-      <button id="btn-profile" type="button">호출하기</button>
-      <pre id="out-profile" class="out" aria-label="프로필 응답">아직 호출하지 않았습니다.</pre>
+      <h2><span data-i18n="demo.p2.title">2. 프로필 불러오기</span> <span class="method">GET /profile</span></h2>
+      <button id="btn-profile" type="button" data-i18n="demo.call">호출하기</button>
+      <pre id="out-profile" class="out" data-i18n="demo.out.empty" data-i18n-attr="aria-label:demo.out.profileAria">아직 호출하지 않았습니다.</pre>
     </section>
 
     <section class="panel">
-      <h2>3. 방명록 <span class="method">GET·POST /guestbook</span></h2>
+      <h2><span data-i18n="demo.p3.title">3. 방명록</span> <span class="method">GET·POST /guestbook</span></h2>
       <form id="guestbook-form">
-        <label for="gb-name">이름</label>
+        <label for="gb-name" data-i18n="demo.form.name">이름</label>
         <input id="gb-name" name="name" maxlength="20" required autocomplete="off">
-        <label for="gb-message">메시지</label>
+        <label for="gb-message" data-i18n="demo.form.message">메시지</label>
         <textarea id="gb-message" name="message" maxlength="200" rows="3" required></textarea>
         <div class="row">
-          <button type="submit">남기기</button>
-          <button id="btn-refresh" type="button" class="secondary">목록 새로고침</button>
+          <button type="submit" data-i18n="demo.form.submit">남기기</button>
+          <button id="btn-refresh" type="button" class="secondary" data-i18n="demo.form.refresh">목록 새로고침</button>
         </div>
       </form>
       <ul id="guestbook-list" class="guestbook"></ul>
-      <p class="hint">방명록은 서버 메모리에만 저장되어, 서버가 재시작되면 비워집니다.</p>
+      <p class="hint" data-i18n="demo.hint">방명록은 서버 메모리에만 저장되어, 서버가 재시작되면 비워집니다.</p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p><a href="index.html">← 개인 소개 페이지로</a></p>
+    <p><a href="index.html" data-i18n="demo.back">← 개인 소개 페이지로</a></p>
   </footer>
 
   <script src="js/config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
   <script src="js/demo.js"></script>
 </body>
 </html>

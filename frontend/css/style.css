@@ -1,14 +1,52 @@
 /* 두 페이지(index.html, demo.html) 공용 스타일 */
 * { box-sizing: border-box; margin: 0; }
 
+/* ── 색상 토큰: 라이트(기본) ─────────────────────────── */
 :root {
-  --brand: #2f6f6a;
-  --brand-dark: #24564f;
+  color-scheme: light;
   --bg: #f4f4f0;
   --ink: #1a2230;
   --ink-soft: #43506a;
   --card-bg: #ffffff;
   --line: #dfd9cd;
+  --brand: #2f6f6a;
+  --brand-hover: #24564f;
+  --on-brand: #ffffff;       /* brand 색 배경 위의 글자색 */
+  --chip-bg: #ecece4;
+  --chip-hover: #dfdfd4;
+  --input-bg: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --loading-bg: #fdf3e7;
+  --loading-line: #e0a86a;
+  --ok-bg: #eef4f3;
+  --err-bg: #fbe9e3;
+  --err-line: #b4532a;
+  --err-ink: #7a2f12;
+  --out-bg: #12161f;
+}
+
+/* ── 색상 토큰: 다크 (theme-init.js / main.js 가 data-theme 을 정한다) ── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #12151a;
+  --ink: #e8eaee;
+  --ink-soft: #a3adbd;
+  --card-bg: #1c2128;
+  --line: #333b47;
+  --brand: #6cc4bb;
+  --brand-hover: #8fd6cf;
+  --on-brand: #0d1a19;
+  --chip-bg: #2a313c;
+  --chip-hover: #364050;
+  --input-bg: #12151a;
+  --shadow: rgba(0, 0, 0, 0.45);
+  --loading-bg: #33291a;
+  --loading-line: #b8874a;
+  --ok-bg: #17302d;
+  --err-bg: #3a1f18;
+  --err-line: #e08a6a;
+  --err-ink: #f5c6b5;
+  --out-bg: #0a0d12;
 }
 
 body {
@@ -17,12 +55,13 @@ body {
   background: var(--bg);
   color: var(--ink);
   line-height: 1.7;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 a { color: var(--brand); font-weight: 600; }
-a:hover { color: var(--brand-dark); }
+a:hover { color: var(--brand-hover); }
 
-/* 헤더 + 내비게이션 */
+/* 헤더 + 내비게이션 + 테마/언어 버튼 */
 .site-header {
   display: flex;
   justify-content: space-between;
@@ -33,20 +72,35 @@ a:hover { color: var(--brand-dark); }
   border-bottom: 3px solid var(--ink);
 }
 .site-header h1 { font-size: clamp(22px, 4vw, 30px); letter-spacing: -0.4px; }
+.header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .site-header nav { display: flex; gap: 8px; }
-.site-header nav a {
+.site-header nav a,
+.controls button {
   padding: 6px 14px;
   border-radius: 20px;
   text-decoration: none;
   color: var(--ink-soft);
   border: 1px solid var(--line);
   background: var(--card-bg);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.7;
+  cursor: pointer;
 }
-.site-header nav a:hover { border-color: var(--brand); color: var(--brand); }
+.site-header nav a:hover,
+.controls button:hover { border-color: var(--brand); color: var(--brand); background: var(--card-bg); }
 .site-header nav a[aria-current="page"] {
   background: var(--brand);
   border-color: var(--brand);
-  color: #fff;
+  color: var(--on-brand);
+}
+.controls { display: flex; gap: 8px; }
+.controls .ico { margin-right: 4px; }
+
+/* 키보드 이동 시 포커스 표시 */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
 }
 
 /* 카드 */
@@ -66,8 +120,8 @@ a:hover { color: var(--brand-dark); }
   padding: 24px;
   width: 300px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s;
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: transform 0.2s, background-color 0.2s;
 }
 .card:hover { transform: translateY(-6px); }
 .card h2 { font-size: 20px; margin: 4px 0; }
@@ -81,7 +135,7 @@ a:hover { color: var(--brand-dark); }
   margin: 0 auto 8px;
   border-radius: 50%;
   background: var(--brand);
-  color: #fff;
+  color: var(--on-brand);
   font-size: 40px;
   font-weight: 700;
   display: flex;
@@ -102,7 +156,7 @@ a:hover { color: var(--brand-dark); }
 .tags li {
   padding: 3px 12px;
   border-radius: 16px;
-  background: #ecece4;
+  background: var(--chip-bg);
   color: var(--ink-soft);
   font-size: 14px;
 }
@@ -113,7 +167,7 @@ a:hover { color: var(--brand-dark); }
 .endpoint { font-size: 14px; color: var(--ink-soft); word-break: break-all; }
 code {
   font-family: "JetBrains Mono", Consolas, monospace;
-  background: #ecece4;
+  background: var(--chip-bg);
   padding: 1px 6px;
   border-radius: 5px;
   font-size: 0.9em;
@@ -130,16 +184,17 @@ code {
   background: var(--card-bg);
   font-size: 14px;
 }
-.status.loading { border-color: #e0a86a; background: #fdf3e7; }
-.status.ok      { border-color: var(--brand); background: #eef4f3; }
-.status.error   { border-color: #b4532a; background: #fbe9e3; color: #7a2f12; }
+.status.loading { border-color: var(--loading-line); background: var(--loading-bg); }
+.status.ok      { border-color: var(--brand); background: var(--ok-bg); }
+.status.error   { border-color: var(--err-line); background: var(--err-bg); color: var(--err-ink); }
 
 .panel {
   background: var(--card-bg);
   border-radius: 12px;
   padding: 20px 24px;
   margin: 16px 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: background-color 0.2s;
 }
 .panel h2 { font-size: 18px; margin-bottom: 12px; }
 .method {
@@ -148,30 +203,30 @@ code {
   font-size: 12px;
   font-weight: 600;
   color: var(--brand);
-  background: #eef4f3;
+  background: var(--ok-bg);
   padding: 2px 8px;
   border-radius: 6px;
   white-space: nowrap;
 }
 
-button {
+.panel button, .panel form button {
   font: inherit;
   font-weight: 600;
   padding: 8px 18px;
   border: 0;
   border-radius: 8px;
   background: var(--brand);
-  color: #fff;
+  color: var(--on-brand);
   cursor: pointer;
 }
-button:hover { background: var(--brand-dark); }
-button.secondary { background: #ecece4; color: var(--ink); }
-button.secondary:hover { background: #dfdfd4; }
+.panel button:hover { background: var(--brand-hover); }
+.panel button.secondary { background: var(--chip-bg); color: var(--ink); }
+.panel button.secondary:hover { background: var(--chip-hover); }
 
 .out {
   margin-top: 12px;
   padding: 12px 14px;
-  background: #12161f;
+  background: var(--out-bg);
   color: #e6e6e6;
   border-radius: 9px;
   font-family: "JetBrains Mono", Consolas, monospace;
@@ -188,9 +243,10 @@ form input, form textarea {
   padding: 8px 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fff;
+  background: var(--input-bg);
+  color: var(--ink);
 }
-form input:focus, form textarea:focus { outline: 2px solid var(--brand); border-color: var(--brand); }
+form input:focus, form textarea:focus { border-color: var(--brand); }
 form .row { display: flex; gap: 8px; margin-top: 12px; }
 
 .guestbook { list-style: none; padding: 0; margin-top: 16px; }
@@ -212,4 +268,8 @@ form .row { display: flex; gap: 8px; margin-top: 12px; }
 @media (max-width: 600px) {
   .site-header { padding: 16px 20px; }
   .card { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
 }
