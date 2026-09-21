@@ -2,4 +2,4 @@
 // 접속한 주소(hostname)를 보고 로컬/배포를 자동으로 고른다.
 const API_BASE_URL = ["localhost", "127.0.0.1"].includes(location.hostname)
   ? "http://127.0.0.1:8000"
-  : "https://<Render 서비스명>.onrender.com"; // TODO(Phase 5): Render 배포 후 실제 주소로 교체 (끝에 / 없이)
+  : "https://junoopark.onrender.com"; // Render 백엔드 주소 (끝에 / 없이)
