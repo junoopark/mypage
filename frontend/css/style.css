@@ -1,0 +1,121 @@
+/* 두 페이지(index.html, demo.html) 공용 스타일 */
+* { box-sizing: border-box; margin: 0; }
+
+:root {
+  --brand: #2f6f6a;
+  --brand-dark: #24564f;
+  --bg: #f4f4f0;
+  --ink: #1a2230;
+  --ink-soft: #43506a;
+  --card-bg: #ffffff;
+  --line: #dfd9cd;
+}
+
+body {
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic",
+               "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+a { color: var(--brand); font-weight: 600; }
+a:hover { color: var(--brand-dark); }
+
+/* 헤더 + 내비게이션 */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px 40px;
+  border-bottom: 3px solid var(--ink);
+}
+.site-header h1 { font-size: clamp(22px, 4vw, 30px); letter-spacing: -0.4px; }
+.site-header nav { display: flex; gap: 8px; }
+.site-header nav a {
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+}
+.site-header nav a:hover { border-color: var(--brand); color: var(--brand); }
+.site-header nav a[aria-current="page"] {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+/* 카드 */
+.cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  padding: 32px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+.card:hover { transform: translateY(-6px); }
+.card h2 { font-size: 20px; margin: 4px 0; }
+.card p { margin: 8px 0; }
+.card .role { color: var(--brand); font-weight: 700; }
+
+/* 프로필 이니셜 아바타 (이미지 없이 원형으로 표시) */
+.avatar {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  font-size: 40px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 관심 분야 태그 */
+.tags {
+  list-style: none;
+  padding: 0;
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.tags li {
+  padding: 3px 12px;
+  border-radius: 16px;
+  background: #ecece4;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+/* 푸터 */
+.site-footer {
+  text-align: center;
+  padding: 24px 20px 40px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 600px) {
+  .site-header { padding: 16px 20px; }
+  .card { width: 100%; }
+}
