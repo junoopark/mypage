@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, status
 
@@ -22,7 +22,7 @@ def list_guestbook(limit: int = 10):
 @router.post("", response_model=GuestbookOut, status_code=status.HTTP_201_CREATED)
 def create_guestbook(payload: GuestbookCreate):
     global _next_id
-    entry = {"id": _next_id, "created_at": datetime.now(), **payload.model_dump()}
+    entry = {"id": _next_id, "created_at": datetime.now(timezone.utc), **payload.model_dump()}
     _entries.append(entry)
     _next_id += 1
     if len(_entries) > MAX_ENTRIES:

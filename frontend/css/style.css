@@ -107,6 +107,100 @@ a:hover { color: var(--brand-dark); }
   font-size: 14px;
 }
 
+/* ── API 연동 실습 페이지 (demo.html) ─────────────────── */
+.page { max-width: 760px; margin: 0 auto; padding: 28px 20px 8px; }
+.lead { margin-bottom: 8px; }
+.endpoint { font-size: 14px; color: var(--ink-soft); word-break: break-all; }
+code {
+  font-family: "JetBrains Mono", Consolas, monospace;
+  background: #ecece4;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+.status {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 16px 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border-left: 4px solid var(--line);
+  background: var(--card-bg);
+  font-size: 14px;
+}
+.status.loading { border-color: #e0a86a; background: #fdf3e7; }
+.status.ok      { border-color: var(--brand); background: #eef4f3; }
+.status.error   { border-color: #b4532a; background: #fbe9e3; color: #7a2f12; }
+
+.panel {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.panel h2 { font-size: 18px; margin-bottom: 12px; }
+.method {
+  margin-left: 6px;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand);
+  background: #eef4f3;
+  padding: 2px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--brand);
+  color: #fff;
+  cursor: pointer;
+}
+button:hover { background: var(--brand-dark); }
+button.secondary { background: #ecece4; color: var(--ink); }
+button.secondary:hover { background: #dfdfd4; }
+
+.out {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #12161f;
+  color: #e6e6e6;
+  border-radius: 9px;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+form label { display: block; margin: 10px 0 4px; font-size: 14px; font-weight: 600; }
+form input, form textarea {
+  width: 100%;
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+form input:focus, form textarea:focus { outline: 2px solid var(--brand); border-color: var(--brand); }
+form .row { display: flex; gap: 8px; margin-top: 12px; }
+
+.guestbook { list-style: none; padding: 0; margin-top: 16px; }
+.guestbook li { padding: 12px 0; border-top: 1px solid var(--line); }
+.guestbook .gb-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.guestbook time { font-size: 12px; color: var(--ink-soft); }
+.guestbook p { margin: 4px 0 0; word-break: break-word; }
+.guestbook .empty { color: var(--ink-soft); text-align: center; }
+.hint { margin-top: 12px; font-size: 13px; color: var(--ink-soft); }
+
 /* 푸터 */
 .site-footer {
   text-align: center;
