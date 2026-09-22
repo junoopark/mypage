@@ -15,12 +15,13 @@
     { key: "long", US: "y10", KR: "ktb10y" },
   ];
   let selectedMaturity = "long"; // 기본값: 10년(듀레이션 대표 지표)
+  const CHART_MARKET_LABEL = { US: "UST", KR: "KTB" }; // 차트 제목에만 쓰는 표기 (영문 약어, 두 언어 공통)
   const VIEW_MIN = -2;
   const VIEW_MAX = 2;
   const NS = "http://www.w3.org/2000/svg";
   const CHART_W = 600;
   const CHART_H = 200;
-  const MARGIN = { top: 10, right: 10, bottom: 22, left: 32 };
+  const MARGIN = { top: 10, right: 10, bottom: 26, left: 38 }; // 축 글씨가 커진 만큼 여백도 넓힌다
 
   const body = document.querySelector('[data-tile="strategy"]');
   if (!body) return;
@@ -187,7 +188,7 @@
     const yScale = (v) => y1 - ((v - vMin) / (vMax - vMin || 1)) * (y1 - y0);
 
     const bands = buildBands(opinionRows, market, tsMin, tsMax);
-    const title = t("strategy.chart.title", { market: t(`market.${market}`), maturity: t(`strategy.maturity.${selectedMaturity}.title`) });
+    const title = t("strategy.chart.title", { market: CHART_MARKET_LABEL[market] });
 
     const svg = svgEl("svg", {
       class: "strategy-svg",
@@ -215,7 +216,7 @@
       const v = vMin + ((vMax - vMin) * i) / yTickCount;
       const y = yScale(v);
       svg.append(svgEl("line", { class: "axis-line", x1: x0, x2: x1, y1: y, y2: y }));
-      const label = svgEl("text", { class: "axis-label", x: x0 - 5, y: y + 3, "text-anchor": "end" });
+      const label = svgEl("text", { class: "axis-label", x: x0 - 6, y: y + 4, "text-anchor": "end" });
       label.textContent = v.toFixed(1);
       svg.append(label);
     }
@@ -223,7 +224,7 @@
     // x축 눈금(월 단위, 2개월 간격)
     for (const ts of monthTicks(tsMin, tsMax)) {
       const x = xScale(ts);
-      const label = svgEl("text", { class: "axis-label", x, y: y1 + 14, "text-anchor": "middle" });
+      const label = svgEl("text", { class: "axis-label", x, y: y1 + 17, "text-anchor": "middle" });
       label.textContent = formatAxisTs(ts);
       svg.append(label);
     }

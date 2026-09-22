@@ -64,6 +64,12 @@
     const table = make("table", "opinion");
     table.append(make("caption", "sr-only", t("viewpoint.opinion.title")));
 
+    // 칸을 정사각형으로 고정한다 (table-layout:fixed 는 열 너비를 <col> 로만 정확히 잡을 수 있다)
+    const colgroup = make("colgroup");
+    colgroup.append(make("col", "col-market"));
+    for (let i = 0; i < 5; i++) colgroup.append(make("col", "col-cell"));
+    table.append(colgroup);
+
     // 열 머리글: 축소(열 1~2) · 중립(열 3) · 확대(열 4~5)
     const headRow = make("tr");
     const corner = make("th");
