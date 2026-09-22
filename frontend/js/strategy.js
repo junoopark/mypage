@@ -14,7 +14,8 @@
     { key: "short", US: "y2", KR: "ktb3y", color: "var(--loading-line)" },
     { key: "long", US: "y10", KR: "ktb10y", color: "var(--ink)" },
   ];
-  let selectedMaturity = "long"; // 기본값: 10년(듀레이션 대표 지표). "overlay" 면 세 만기를 겹쳐 그린다
+  // 선택된 만기 집합(복수 선택 가능) — 기본값: 장기(10년) 하나. 두 개 이상 고르면 자동으로 겹쳐 그린다
+  let selectedMaturities = new Set(["long"]);
   const CHART_MARKET_LABEL = { US: "UST", KR: "KTB" }; // 차트 제목에만 쓰는 표기 (영문 약어, 두 언어 공통)
   const VIEW_MIN = -2;
   const VIEW_MAX = 2;
@@ -96,18 +97,21 @@
     return ul;
   }
 
-  // ── 만기 토글: 기준금리 · 단기(2·3년) · 10년 · 겹쳐보기 ─────
+  // ── 만기 토글: 기준금리 · 단기(2·3년) · 장기(10년), 복수 선택 가능(누르면 켜고 끈다) ─────
   function buildToggle(onChange) {
     const div = make("div", "strategy-toggle");
     div.setAttribute("role", "group");
-    const keys = [...MATURITIES.map((m) => m.key), "overlay"];
-    for (const key of keys) {
-      const btn = make("button", "", t(`strategy.maturity.${key}`));
+    for (const m of MATURITIES) {
+      const btn = make("button", "", t(`strategy.maturity.${m.key}`));
       btn.type = "button";
-      btn.setAttribute("aria-pressed", String(key === selectedMaturity));
+      btn.setAttribute("aria-pressed", String(selectedMaturities.has(m.key)));
       btn.addEventListener("click", () => {
-        if (selectedMaturity === key) return;
-        selectedMaturity = key;
+        if (selectedMaturities.has(m.key)) {
+          if (selectedMaturities.size === 1) return; // 최소 하나는 켜져 있어야 한다
+          selectedMaturities.delete(m.key);
+        } else {
+          selectedMaturities.add(m.key);
+        }
         onChange();
       });
       div.append(btn);
@@ -115,10 +119,10 @@
     return div;
   }
 
-  // 겹쳐보기 모드에서만 보이는, 어떤 선이 어떤 만기인지 알려주는 작은 범례
-  function buildLineLegend() {
+  // 두 개 이상 선택했을 때만 보이는, 어떤 선이 어떤 만기인지 알려주는 작은 범례
+  function buildLineLegend(activeMaturities) {
     const div = make("div", "strategy-line-legend");
-    for (const m of MATURITIES) {
+    for (const m of activeMaturities) {
       const span = make("span");
       const swatch = make("i");
       swatch.style.background = m.color;
@@ -192,10 +196,10 @@
     return nearest;
   }
 
-  // ── 시장 하나의 차트를 그린다. mode 가 "overlay" 면 기준금리·단기·장기를 겹쳐 그린다 ──
-  function buildChart(market, marketData, opinionRows, mode) {
+  // ── 시장 하나의 차트를 그린다. 만기를 2개 이상 고르면 자동으로 겹쳐 그린다 ──
+  function buildChart(market, marketData, opinionRows, activeMaturities) {
     const chartStart = toTs(CHART_START_DATE);
-    const activeMaturities = mode === "overlay" ? MATURITIES : MATURITIES.filter((m) => m.key === mode);
+    const isMulti = activeMaturities.length > 1;
     const activeSeries = activeMaturities
       .map((m) => {
         const raw = marketData.series?.[m[market]];
@@ -305,7 +309,7 @@
         hoverDots[i].style.opacity = 1;
       });
 
-      if (mode === "overlay") {
+      if (isMulti) {
         const lines = [t("strategy.tooltip.header", { date: formatTooltipTs(nearestRef.ts), opinion: opinionLabel })];
         for (const s of activeSeries) {
           const p = nearestPoint(s.points, nearestRef.ts);
@@ -343,7 +347,7 @@
 
     const section = make("div", "strategy-chart");
     section.append(make("h3", "", title));
-    if (mode === "overlay") section.append(buildLineLegend());
+    if (isMulti) section.append(buildLineLegend(activeMaturities));
     section.append(wrap);
     return section;
   }
@@ -361,7 +365,8 @@
     for (const market of MARKETS) {
       const marketData = data.rates?.[market];
       if (!marketData) continue;
-      const chart = buildChart(market, marketData, data.opinions?.rows || [], selectedMaturity);
+      const activeMaturities = MATURITIES.filter((m) => selectedMaturities.has(m.key));
+      const chart = buildChart(market, marketData, data.opinions?.rows || [], activeMaturities);
       if (chart) wrap.append(chart);
     }
     body.append(wrap);
