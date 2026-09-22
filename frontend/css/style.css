@@ -265,6 +265,63 @@ form .row { display: flex; gap: 8px; margin-top: 12px; }
   color: var(--ink-soft);
 }
 
+/* ── 소개 페이지 틀: 한 화면에 3 x 2 타일 (index.html, body.frame) ── */
+body.frame {
+  height: 100vh;
+  height: 100dvh;            /* 모바일 주소창을 뺀 실제 화면 높이 */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;          /* 페이지 자체는 스크롤하지 않는다 */
+}
+.frame .site-header { flex: none; padding: 10px 24px; border-bottom-width: 2px; }
+.frame .site-header h1 { font-size: clamp(18px, 2.4vw, 24px); }
+
+.tiles {
+  flex: 1;
+  min-height: 0;             /* flex 자식이 내용 때문에 화면 밖으로 밀려나지 않게 한다 */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 16px 24px 24px;
+}
+.tile {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: background-color 0.2s;
+}
+.tile-head { flex: none; padding: 10px 16px; border-bottom: 1px solid var(--line); }
+.tile-head h2 { font-size: 16px; }
+.tile-body { flex: 1; min-height: 0; overflow: auto; padding: 16px; }   /* 내용이 넘치면 타일 안에서만 스크롤 */
+.tile-placeholder {
+  height: 100%;
+  min-height: 60px;
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--line);
+  border-radius: 8px;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+/* 화면이 낮으면(가로 모드 휴대폰 등) 억지로 맞추지 않고 스크롤을 허용한다 */
+@media (max-height: 520px) {
+  body.frame { height: auto; overflow: auto; }
+  .tiles { grid-template-rows: repeat(2, minmax(220px, 1fr)); }
+}
+
+/* 좁은 화면(휴대폰): 3 x 2 는 읽기 어려워 1열로 쌓고, 페이지를 스크롤한다 */
+@media (max-width: 720px) {
+  body.frame { height: auto; overflow: auto; }
+  .tiles { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: minmax(200px, auto); padding: 12px 16px 20px; }
+  .frame .site-header { padding: 10px 16px; }
+}
+
 @media (max-width: 600px) {
   .site-header { padding: 16px 20px; }
   .card { width: 100%; }

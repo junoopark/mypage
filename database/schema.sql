@@ -1,0 +1,7 @@
+-- 데이터베이스 스키마 (PostgreSQL / Supabase 기준)
+--
+-- 아직 테이블이 없다. 6개 화면(타일)의 내용이 정해지면 여기에 정의한다.
+-- 테이블을 바꿀 때는 backend/app/db/models.py 도 함께 고친다.
+--
+-- 이름 규칙: 테이블은 복수형 소문자 snake_case (예: guestbook_entries),
+--            기본키는 id, 생성 시각은 created_at (timestamptz)

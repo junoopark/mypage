@@ -8,7 +8,7 @@
   <script src="js/theme-init.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="frame">
   <header class="site-header">
     <h1 data-i18n="index.h1">박준우를 소개합니다</h1>
     <div class="header-right">
@@ -23,40 +23,46 @@
     </div>
   </header>
 
-  <!-- TODO: 아래 소개 내용은 모두 임시 문구입니다. 나중에 본인 내용으로 교체하세요.
-       (한국어는 이 파일에, English 는 js/i18n.js 에 있습니다.) -->
-  <main class="cards">
+  <!--
+    한 화면에 담기는 3 x 2 타일 틀. 내용은 아직 비어 있다.
+    - 타일 식별자: viewpoint · strategy · profile · reports · issues · media (좌상단부터 가로 순서)
+    - 각 타일의 본문은 <div class="tile-body" data-tile="식별자"> 안에 채운다.
+    - 나중에 DB 데이터를 불러오는 경우에도 data-tile 요소를 렌더링 대상으로 쓴다.
+    - 제목·문구는 한국어는 여기, English 는 js/i18n.js 의 tile.<식별자>.* 키에 둔다.
+  -->
+  <main class="tiles">
 
-    <article class="card">
-      <div class="avatar" aria-hidden="true" data-i18n="index.avatar">박</div>
-      <h2 data-i18n="index.name">박준우</h2>
-      <p class="role">Fixed Income Strategist</p>
-      <p data-i18n="index.intro">채권 시장을 분석하고 전략을 세우는 일을 합니다.</p>
-      <a href="https://github.com/junoopark" data-i18n="index.github">GitHub 프로필</a>
-    </article>
+    <section class="tile" id="tile-viewpoint" aria-labelledby="tile-viewpoint-title">
+      <header class="tile-head"><h2 id="tile-viewpoint-title" data-i18n="tile.viewpoint.title">매크로 및 금리 전망</h2></header>
+      <div class="tile-body" data-tile="viewpoint"><p class="tile-placeholder" data-i18n="tile.placeholder">내용 준비 중</p></div>
+    </section>
 
-    <article class="card">
-      <h2 data-i18n="index.interests.title">관심 분야</h2>
-      <p class="role" data-i18n="index.interests.sub">무엇을 파고드나</p>
-      <ul class="tags">
-        <li data-i18n="index.interests.bond">채권</li>
-        <li data-i18n="index.interests.rate">금리</li>
-        <li data-i18n="index.interests.cloud">클라우드 컴퓨팅</li>
-      </ul>
-    </article>
+    <section class="tile" id="tile-strategy" aria-labelledby="tile-strategy-title">
+      <header class="tile-head"><h2 id="tile-strategy-title" data-i18n="tile.strategy.title">투자 전략 히스토리</h2></header>
+      <div class="tile-body" data-tile="strategy"><p class="tile-placeholder" data-i18n="tile.placeholder">내용 준비 중</p></div>
+    </section>
 
-    <article class="card">
-      <h2 data-i18n="index.about.title">이 페이지는</h2>
-      <p class="role" data-i18n="index.about.sub">클라우드 컴퓨팅 개인 과제</p>
-      <p data-i18n="index.about.text">HTML로 만든 소개 페이지와, FastAPI 백엔드를 호출하는 연동 실습 페이지로 이루어져 있습니다.</p>
-      <a href="demo.html" data-i18n="index.about.link">API 연동 실습 보기 →</a>
-    </article>
+    <section class="tile" id="tile-profile" aria-labelledby="tile-profile-title">
+      <header class="tile-head"><h2 id="tile-profile-title" data-i18n="tile.profile.title">프로필</h2></header>
+      <div class="tile-body" data-tile="profile"><p class="tile-placeholder" data-i18n="tile.placeholder">내용 준비 중</p></div>
+    </section>
+
+    <section class="tile" id="tile-reports" aria-labelledby="tile-reports-title">
+      <header class="tile-head"><h2 id="tile-reports-title" data-i18n="tile.reports.title">정기 보고서</h2></header>
+      <div class="tile-body" data-tile="reports"><p class="tile-placeholder" data-i18n="tile.placeholder">내용 준비 중</p></div>
+    </section>
+
+    <section class="tile" id="tile-issues" aria-labelledby="tile-issues-title">
+      <header class="tile-head"><h2 id="tile-issues-title" data-i18n="tile.issues.title">이슈 보고서</h2></header>
+      <div class="tile-body" data-tile="issues"><p class="tile-placeholder" data-i18n="tile.placeholder">내용 준비 중</p></div>
+    </section>
+
+    <section class="tile" id="tile-media" aria-labelledby="tile-media-title">
+      <header class="tile-head"><h2 id="tile-media-title" data-i18n="tile.media.title">언론/방송</h2></header>
+      <div class="tile-body" data-tile="media"><p class="tile-placeholder" data-i18n="tile.placeholder">내용 준비 중</p></div>
+    </section>
 
   </main>
-
-  <footer class="site-footer">
-    <p>Frontend: Vercel · Backend: Render · Source: <a href="https://github.com/junoopark/mypage">GitHub</a></p>
-  </footer>
 
   <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>

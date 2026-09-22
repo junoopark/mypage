@@ -17,6 +17,15 @@ const I18N = {
     "lang.other": "EN",
     "lang.aria": "Switch to English",
 
+    // 소개 페이지 — 6개 타일 (좌상단부터 가로 순서)
+    "tile.viewpoint.title": "매크로 및 금리 전망",
+    "tile.strategy.title": "투자 전략 히스토리",
+    "tile.profile.title": "프로필",
+    "tile.reports.title": "정기 보고서",
+    "tile.issues.title": "이슈 보고서",
+    "tile.media.title": "언론/방송",
+    "tile.placeholder": "내용 준비 중",
+
     // 소개 페이지
     "index.title": "박준우 — 개인 소개",
     "index.desc": "박준우의 개인 소개 페이지",
@@ -85,6 +94,15 @@ const I18N = {
     "theme.aria.toLight": "Switch to light mode",
     "lang.other": "한국어",
     "lang.aria": "한국어로 전환",
+
+    // About page — 6 tiles (left to right, top to bottom)
+    "tile.viewpoint.title": "Current Viewpoint",
+    "tile.strategy.title": "Strategy Track Record",
+    "tile.profile.title": "Profile",
+    "tile.reports.title": "Periodic Reports",
+    "tile.issues.title": "Issue Reports",
+    "tile.media.title": "Media Appearance",
+    "tile.placeholder": "Content coming soon",
 
     // About page
     "index.title": "Junoo Park — About",
