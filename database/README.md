@@ -13,6 +13,10 @@
 - Render는 IPv6로 나가지 못하므로 Supabase는 **Session pooler** 연결 문자열을 씁니다.
 - 연결 문자열에는 비밀번호가 들어 있으므로 **저장소에 커밋하지 않습니다.** (`.env`는 `.gitignore` 대상)
 
+## CSV 인코딩 — 한글이 깨질 때
+
+`seed/`의 CSV는 모두 **UTF-8 BOM 포함**으로 저장돼 있습니다. Windows 엑셀은 BOM이 없는 UTF-8 CSV를 열 때 한글을 다른 인코딩으로 잘못 읽어 깨뜨립니다. 이 폴더의 CSV를 열었는데 한글이 깨져 보이면 BOM이 빠진 것이니, 엑셀에서 **파일 → 다른 이름으로 저장 → "CSV UTF-8(쉼표로 분리)"** 을 골라 저장하면 BOM이 다시 붙습니다. 새 CSV를 만들 때도 이 형식으로 저장합니다.
+
 ## 폴더 구성
 
 ```
@@ -20,7 +24,7 @@ database/
 ├─ README.md           # 이 문서
 ├─ schema.sql          # 테이블 정의 (PostgreSQL 기준)
 ├─ seed.sql            # 초기 데이터 (SQL)
-├─ seed/               # 입력용 CSV (엑셀에서 "CSV UTF-8"로 저장). 타일당 1개 이상
+├─ seed/               # 입력용 CSV. 타일당 1개 이상
 │   ├─ viewpoint_opinions.csv
 │   ├─ viewpoint_comments.csv
 │   ├─ profile_basic.csv
