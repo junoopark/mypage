@@ -48,6 +48,12 @@ const I18N = {
     "viewpoint.topic.kr": "한국",
     "viewpoint.error": "데이터를 불러오지 못했습니다",
 
+    // 「투자 전략 히스토리」 타일
+    "strategy.chart.title.US": "미국 10년 금리 및 듀레이션 전략",
+    "strategy.chart.title.KR": "한국 10년 금리 및 듀레이션 전략",
+    "strategy.tooltip": "{date} · {value}% · {opinion}",
+    "strategy.error": "데이터를 불러오지 못했습니다",
+
     // 「프로필」 타일
     "profile.section.career": "경력",
     "profile.section.education": "학력",
@@ -155,6 +161,12 @@ const I18N = {
     "viewpoint.topic.us": "US",
     "viewpoint.topic.kr": "Korea",
     "viewpoint.error": "Failed to load data",
+
+    // "Strategy Track Record" tile
+    "strategy.chart.title.US": "US 10Y Rate & Duration Strategy",
+    "strategy.chart.title.KR": "Korea 10Y Rate & Duration Strategy",
+    "strategy.tooltip": "{date} · {value}% · {opinion}",
+    "strategy.error": "Failed to load data",
 
     // "Profile" tile
     "profile.section.career": "Career",

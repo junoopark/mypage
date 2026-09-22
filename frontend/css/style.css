@@ -375,6 +375,38 @@ body.frame {
 .comments li:first-child { border-top: 0; }
 .comments strong { margin-right: 4px; color: var(--brand); }
 
+/* ── 「투자 전략 히스토리」 타일 ───────────────────────── */
+.tile-body[data-tile="strategy"] { display: flex; flex-direction: column; gap: 12px; padding: 10px 14px; }
+.strategy { display: flex; flex-direction: column; gap: 10px; }
+
+.strategy-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; padding: 0; font-size: 11px; color: var(--ink-soft); }
+.strategy-legend li { display: flex; align-items: center; gap: 4px; }
+.strategy-legend .swatch { width: 12px; height: 12px; border-radius: 2px; flex: none; overflow: hidden; }
+
+.strategy-chart h3 { font-size: 12.5px; font-weight: 700; margin-bottom: 4px; }
+.strategy-chart-wrap { position: relative; }
+.strategy-svg { display: block; width: 100%; height: auto; aspect-ratio: 600 / 200; }
+.strategy-svg .axis-line { stroke: var(--line); stroke-width: 1; }
+.strategy-svg .axis-label { fill: var(--ink-soft); font-size: 9px; }
+.strategy-svg .rate-line { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.strategy-svg .hover-line { stroke: var(--ink-soft); stroke-width: 1; stroke-dasharray: 3 2; opacity: 0; pointer-events: none; }
+.strategy-svg .hover-dot { fill: var(--card-bg); stroke: var(--ink); stroke-width: 1.6; opacity: 0; pointer-events: none; }
+
+.strategy-tooltip {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -130%);
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11.5px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: opacity 0.1s;
+}
+
 /* ── 「프로필」 타일 ───────────────────────────────────── */
 /* 표(viewpoint)와 달리 내용이 길어질 수 있어, 일반 .tile-body 규칙대로
    타일 전체가 세로로 스크롤된다(별도 overflow 규칙을 두지 않는다). */
