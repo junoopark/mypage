@@ -19,7 +19,15 @@
 database/
 ├─ README.md           # 이 문서
 ├─ schema.sql          # 테이블 정의 (PostgreSQL 기준)
-├─ seed.sql            # 초기 데이터
+├─ seed.sql            # 초기 데이터 (SQL)
+├─ seed/               # 입력용 CSV (엑셀에서 "CSV UTF-8"로 저장). 타일당 1개 이상
+│   ├─ viewpoint_opinions.csv
+│   ├─ viewpoint_comments.csv
+│   ├─ profile_basic.csv
+│   ├─ profile_career.csv
+│   ├─ profile_education.csv
+│   ├─ profile_certifications.csv
+│   └─ profile_links.csv
 └─ migrations/         # 스키마 변경 이력 (0001_*.sql, 0002_*.sql …)
 ```
 
@@ -29,9 +37,9 @@ database/
 
 | 위치 | 식별자 | 한국어 | English | 필요한 데이터 |
 |---|---|---|---|---|
-| 좌상 | `viewpoint` | 매크로 및 금리 전망 | Current Viewpoint | (미정) |
+| 좌상 | `viewpoint` | 매크로 및 금리 전망 | Current Viewpoint | 한미 국채 투자의견(-2~+2), 미국·한국 코멘트 2개 → [설계서](../docs/전망타일_설계.md) |
 | 중상 | `strategy` | 투자 전략 히스토리 | Strategy Track Record | (미정) |
-| 우상 | `profile` | 프로필 | Profile | (미정) |
+| 우상 | `profile` | 프로필 | Profile | 이름·직함/소속·소개, 경력·학력·자격증·링크 → [설계서](../docs/프로필타일_설계.md) |
 | 좌하 | `reports` | 정기 보고서 | Periodic Reports | (미정) |
 | 중하 | `issues` | 이슈 보고서 | Issue Reports | (미정) |
 | 우하 | `media` | 언론/방송 | Media Appearance | (미정) |

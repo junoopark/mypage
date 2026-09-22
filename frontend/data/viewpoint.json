@@ -1,0 +1,32 @@
+{
+  "_comment": "임시 표본 데이터입니다. 나중에 API(GET /viewpoint)가 같은 모양의 JSON 을 돌려주도록 바꿉니다. 시장마다 자기 기준일을 가집니다. 모양 설명: docs/전망타일_설계.md",
+  "opinions": {
+    "rows": [
+      {
+        "market": "US",
+        "opinion": -1,
+        "asOf": "2026-09-17",
+        "asOfUrl": "",
+        "prevOpinion": 0
+      },
+      {
+        "market": "KR",
+        "opinion": -1,
+        "asOf": "2026-05-28",
+        "asOfUrl": ""
+      }
+    ]
+  },
+  "comments": [
+    {
+      "topic": "us",
+      "ko": "(미국 핵심 내용 2~3줄)",
+      "en": "(US: 2-3 line summary)"
+    },
+    {
+      "topic": "kr",
+      "ko": "(한국 핵심 내용 2~3줄)",
+      "en": "(Korea: 2-3 line summary)"
+    }
+  ]
+}

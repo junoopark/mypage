@@ -23,6 +23,12 @@
   --err-line: #b4532a;
   --err-ink: #7a2f12;
   --out-bg: #12161f;
+  /* 투자의견 표: 축소(빨강) · 중립(회색) · 확대(청록) */
+  --neg: #b00000;  --neg-soft: #fde3dc;  --neg-strong: #ee9a8a;
+  --pos: #12716e;  --pos-soft: #d5eeec;  --pos-strong: #7cc9c4;
+  --neu: #4a5568;  --neu-soft: #e6e8ec;
+  --cell-bg: #eeeeea;
+  --dot: #9a9a9a;  --dot-line: #6f6f6f;
 }
 
 /* ── 색상 토큰: 다크 (theme-init.js / main.js 가 data-theme 을 정한다) ── */
@@ -47,6 +53,11 @@
   --err-line: #e08a6a;
   --err-ink: #f5c6b5;
   --out-bg: #0a0d12;
+  --neg: #ff8f7f;  --neg-soft: #47231e;  --neg-strong: #9a4437;
+  --pos: #62d3cb;  --pos-soft: #143735;  --pos-strong: #23736d;
+  --neu: #b7c0cf;  --neu-soft: #333b47;
+  --cell-bg: #2a313c;
+  --dot: #8b95a5;  --dot-line: #c2cad6;
 }
 
 body {
@@ -308,6 +319,96 @@ body.frame {
   color: var(--ink-soft);
   font-size: 14px;
 }
+
+/* ── 「매크로 및 금리 전망」 타일 ─────────────────────── */
+.sr-only {                   /* 화면에는 안 보이고 스크린 리더만 읽는 글자 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.tile-body[data-tile="viewpoint"] { display: flex; flex-direction: column; overflow: hidden; padding: 8px 14px 10px; }
+.viewpoint { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 2px; }
+.vp-title { flex: none; font-size: 13px; line-height: 1.3; }
+
+/* 투자의견 표: 열 5개(적극축소·축소·중립·확대·적극확대) x 행 2개(미국·한국) */
+/* border-spacing 이 표 바깥 가장자리에도 생기므로, 좌우로 같은 만큼 넓혀 다른 내용과 줄을 맞춘다 */
+.opinion { flex: none; table-layout: fixed; border-collapse: separate; border-spacing: 4px; margin: 0 -4px; width: calc(100% + 8px); }
+.opinion th, .opinion td { padding: 0; }
+.opinion thead th { font-size: 12px; font-weight: 700; text-align: center; line-height: 1.2; }
+.opinion thead th:first-child { width: 3.2em; }
+.opinion .group.neg { color: var(--neg); }
+.opinion .group.neu { color: var(--ink); }
+.opinion .group.pos { color: var(--pos); }
+.opinion .market { font-size: 13px; font-weight: 700; text-align: left; white-space: nowrap; }
+.opinion td {
+  position: relative;
+  height: clamp(20px, 3.4vh, 34px);
+  background: var(--cell-bg);
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+/* 현재 전망: 색 + 테두리. 적극(±2)은 채움을 더 진하게 */
+.opinion td.current.neg { border-color: var(--neg); background: var(--neg-soft); }
+.opinion td.current.pos { border-color: var(--pos); background: var(--pos-soft); }
+.opinion td.current.neu { border-color: var(--neu); background: var(--neu-soft); }
+.opinion td.current.neg.strong { background: var(--neg-strong); }
+.opinion td.current.pos.strong { background: var(--pos-strong); }
+/* 직전 전망: 회색 원 */
+.opinion .prev-dot {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--dot);
+  border: 1px solid var(--dot-line);
+}
+.vp-note { flex: none; font-size: 11.5px; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 3px; line-height: 1.4; }
+
+/* 시장별 핵심 코멘트: 표는 고정, 이 목록만 넘치면 타일 안에서 스크롤 */
+.comments { list-style: none; margin: 2px 0 0; padding: 0; flex: 1; min-height: 0; overflow: auto; font-size: 13px; line-height: 1.45; }
+.comments li { padding: 3px 0; border-top: 1px solid var(--line); }
+.comments li:first-child { border-top: 0; }
+.comments strong { margin-right: 4px; color: var(--brand); }
+
+/* ── 「프로필」 타일 ───────────────────────────────────── */
+/* 표(viewpoint)와 달리 내용이 길어질 수 있어, 일반 .tile-body 규칙대로
+   타일 전체가 세로로 스크롤된다(별도 overflow 규칙을 두지 않는다). */
+.profile-name { font-size: 17px; line-height: 1.3; }
+.profile-name p { margin: 0; }
+.profile-title { margin-top: 2px; font-size: 13px; font-weight: 700; color: var(--brand); line-height: 1.4; }
+.profile-title p { margin: 0; }
+.profile-bio { margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+.profile-bio p { margin: 0; }
+.profile-bio p + p { margin-top: 2px; }
+
+.profile-section { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+.profile-section h4 { font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: var(--ink-soft); text-transform: uppercase; }
+
+.profile-list { list-style: none; padding: 0; margin: 6px 0 0; font-size: 13px; }
+.profile-list li { padding: 6px 0; }
+.profile-list li + li { border-top: 1px dashed var(--line); }
+.pl-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
+.pl-sub { color: var(--ink-soft); }
+.pl-period { margin: 1px 0 0; font-size: 12px; color: var(--ink-soft); }
+.pl-desc { margin: 2px 0 0; line-height: 1.45; }
+
+.profile-links { list-style: none; padding: 0; margin: 6px 0 0; display: flex; gap: 8px; flex-wrap: wrap; }
+.profile-links a {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 16px;
+  background: var(--chip-bg);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.profile-links a:hover { background: var(--chip-hover); color: var(--brand); }
 
 /* 화면이 낮으면(가로 모드 휴대폰 등) 억지로 맞추지 않고 스크롤을 허용한다 */
 @media (max-height: 520px) {
