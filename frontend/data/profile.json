@@ -1,5 +1,5 @@
 {
-  "_comment": "Profile.pdf(LinkedIn 내보내기) 기준. 나중에 API(GET /profile)로 교체.",
+  "_comment": "database/seed/profile_*.csv 로부터 생성. 나중에 API(GET /profile)로 교체.",
   "basic": {
     "name_ko": [
       "박준우, CFA"
@@ -8,11 +8,11 @@
       "Junoo Park, CFA"
     ],
     "title_ko": [
-      "채권전략가 · 하나증권",
+      "채권 Strategist · 하나증권 리서치센터",
       "서울, 대한민국"
     ],
     "title_en": [
-      "Fixed Income Strategist, Hana Securities",
+      "Fixed Income Strategist, Research Center Hana Securities",
       "Seoul, South Korea"
     ],
     "bio_ko": [],
@@ -22,7 +22,7 @@
     {
       "org_ko": "하나증권",
       "org_en": "Hana Securities",
-      "role_ko": "채권전략가",
+      "role_ko": "채권 Strategist",
       "role_en": "Fixed Income Strategist",
       "start": "2025-09",
       "end": null,
@@ -32,13 +32,12 @@
     {
       "org_ko": "KB증권",
       "org_en": "KB Securities",
-      "role_ko": "글로벌 채권전략가",
+      "role_ko": "글로벌 채권 Strategist",
       "role_en": "Global Fixed Income Strategist",
       "start": "2019-08",
       "end": "2025-09",
       "desc_ko": [
-        "리서치본부",
-        "글로벌 채권전략가"
+        "리서치본부"
       ],
       "desc_en": [
         "Research Division",
@@ -48,15 +47,12 @@
     {
       "org_ko": "한화손해보험",
       "org_en": "Hanwha General Insurance",
-      "role_ko": "어소시에이트",
+      "role_ko": "사원",
       "role_en": "Associate",
       "start": "2017-01",
       "end": "2019-07",
       "desc_ko": [
-        "자산운용본부",
-        "LDI 전략",
-        "글로벌 금리 리서치",
-        "운용성과 평가"
+        "자산운용본부"
       ],
       "desc_en": [
         "Asset Management Division",
@@ -73,8 +69,7 @@
       "start": "2016-06",
       "end": "2016-12",
       "desc_ko": [
-        "글로벌모니터링실",
-        "데일리 플래시 뉴스"
+        "글로벌모니터링실"
       ],
       "desc_en": [
         "Global Monitoring Dept.",
@@ -84,12 +79,12 @@
     {
       "org_ko": "대한민국 육군",
       "org_en": "Republic of Korea Army",
-      "role_ko": "병장(카투사)",
+      "role_ko": "병장",
       "role_en": "Sergeant (KATUSA)",
       "start": "2012-05",
       "end": "2014-02",
       "desc_ko": [
-        "카투사 · 주한미군 배속 근무"
+        "KATUSA"
       ],
       "desc_en": [
         "KATUSA · Korean Augmentation To the US Army"
@@ -100,7 +95,7 @@
     {
       "school_ko": "KAIST 경영대학",
       "school_en": "KAIST College of Business",
-      "degree_ko": "경영학 석사(MBA)",
+      "degree_ko": "디지털금융 MBA",
       "degree_en": "Master of Business Administration (MBA)",
       "start": "2025",
       "end": "2027"
@@ -108,7 +103,7 @@
     {
       "school_ko": "성균관대학교",
       "school_en": "Sungkyunkwan University (SKKU)",
-      "degree_ko": "",
+      "degree_ko": "경영학",
       "degree_en": "",
       "start": "2011-03",
       "end": "2017-02"
