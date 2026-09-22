@@ -27,7 +27,7 @@ const I18N = {
     "tile.placeholder": "내용 준비 중",
 
     // 「매크로 및 금리 전망」 타일
-    "viewpoint.opinion.title": "한미 국채 투자의견",
+    "viewpoint.opinion.title": "듀레이션 전략",
     "viewpoint.market": "시장",
     "market.US": "미국",
     "market.KR": "한국",
@@ -41,9 +41,9 @@ const I18N = {
     "view.group.pos": "확대",
     "viewpoint.current": "현재 전망: {label}",
     "viewpoint.prev": "직전 전망: {label}",
-    "viewpoint.note.withPrev": "주: {asOf} 기준. ●는 직전 전망",
-    "viewpoint.note.noPrev": "주: {asOf} 기준.",
-    "viewpoint.note.dotOnly": "주: ●는 직전 전망",
+    "viewpoint.note.withPrev": "주: 향후 1~3개월 기준. {asOf} 발표. ●는 직전 전망",
+    "viewpoint.note.noPrev": "주: 향후 1~3개월 기준. {asOf} 발표.",
+    "viewpoint.note.dotOnly": "주: 향후 1~3개월 기준. ●는 직전 전망",
     "viewpoint.topic.us": "미국",
     "viewpoint.topic.kr": "한국",
     "viewpoint.error": "데이터를 불러오지 못했습니다",
@@ -53,7 +53,10 @@ const I18N = {
     "strategy.maturity.base": "기준금리",
     "strategy.maturity.short": "단기(2·3년)",
     "strategy.maturity.long": "10년",
+    "strategy.maturity.overlay": "겹쳐보기",
     "strategy.tooltip": "{date} · {value}% · {opinion}",
+    "strategy.tooltip.header": "{date} · {opinion}",
+    "strategy.tooltip.line": "{maturity} {value}%",
     "strategy.error": "데이터를 불러오지 못했습니다",
 
     // 「프로필」 타일
@@ -143,7 +146,7 @@ const I18N = {
     "tile.placeholder": "Content coming soon",
 
     // "Current Viewpoint" tile
-    "viewpoint.opinion.title": "US & Korea Treasury stance",
+    "viewpoint.opinion.title": "Duration Strategy",
     "viewpoint.market": "Market",
     "market.US": "US",
     "market.KR": "Korea",
@@ -157,9 +160,9 @@ const I18N = {
     "view.group.pos": "Overweight",
     "viewpoint.current": "Current view: {label}",
     "viewpoint.prev": "Previous view: {label}",
-    "viewpoint.note.withPrev": "Note: as of {asOf}. ● = previous view",
-    "viewpoint.note.noPrev": "Note: as of {asOf}.",
-    "viewpoint.note.dotOnly": "Note: ● = previous view",
+    "viewpoint.note.withPrev": "Note: 1-3 month outlook. Published {asOf}. ● = previous view",
+    "viewpoint.note.noPrev": "Note: 1-3 month outlook. Published {asOf}.",
+    "viewpoint.note.dotOnly": "Note: 1-3 month outlook. ● = previous view",
     "viewpoint.topic.us": "US",
     "viewpoint.topic.kr": "Korea",
     "viewpoint.error": "Failed to load data",
@@ -169,7 +172,10 @@ const I18N = {
     "strategy.maturity.base": "Policy rate",
     "strategy.maturity.short": "Short (2Y/3Y)",
     "strategy.maturity.long": "10Y",
+    "strategy.maturity.overlay": "Overlay",
     "strategy.tooltip": "{date} · {value}% · {opinion}",
+    "strategy.tooltip.header": "{date} · {opinion}",
+    "strategy.tooltip.line": "{maturity} {value}%",
     "strategy.error": "Failed to load data",
 
     // "Profile" tile

@@ -8,13 +8,13 @@
   const STRATEGY_URL = `${API_BASE_URL}/strategy`;
   const MARKETS = ["US", "KR"]; // 차트 순서
   const CHART_START_DATE = "2026-01-01"; // 금리 차트는 이 날짜부터 그린다
-  // 만기 토글: key 는 화면 상태, US/KR 은 시장마다 다른 series 키로 연결한다
+  // 만기 토글: key 는 화면 상태, US/KR 은 시장마다 다른 series 키로 연결한다. color 는 겹쳐보기 모드의 선 색
   const MATURITIES = [
-    { key: "base", US: "base", KR: "base" },
-    { key: "short", US: "y2", KR: "ktb3y" },
-    { key: "long", US: "y10", KR: "ktb10y" },
+    { key: "base", US: "base", KR: "base", color: "var(--brand)" },
+    { key: "short", US: "y2", KR: "ktb3y", color: "var(--loading-line)" },
+    { key: "long", US: "y10", KR: "ktb10y", color: "var(--ink)" },
   ];
-  let selectedMaturity = "long"; // 기본값: 10년(듀레이션 대표 지표)
+  let selectedMaturity = "long"; // 기본값: 10년(듀레이션 대표 지표). "overlay" 면 세 만기를 겹쳐 그린다
   const CHART_MARKET_LABEL = { US: "UST", KR: "KTB" }; // 차트 제목에만 쓰는 표기 (영문 약어, 두 언어 공통)
   const VIEW_MIN = -2;
   const VIEW_MAX = 2;
@@ -96,20 +96,34 @@
     return ul;
   }
 
-  // ── 만기 토글: 기준금리 · 단기(2·3년) · 10년 ─────────
+  // ── 만기 토글: 기준금리 · 단기(2·3년) · 10년 · 겹쳐보기 ─────
   function buildToggle(onChange) {
     const div = make("div", "strategy-toggle");
     div.setAttribute("role", "group");
-    for (const m of MATURITIES) {
-      const btn = make("button", "", t(`strategy.maturity.${m.key}`));
+    const keys = [...MATURITIES.map((m) => m.key), "overlay"];
+    for (const key of keys) {
+      const btn = make("button", "", t(`strategy.maturity.${key}`));
       btn.type = "button";
-      btn.setAttribute("aria-pressed", String(m.key === selectedMaturity));
+      btn.setAttribute("aria-pressed", String(key === selectedMaturity));
       btn.addEventListener("click", () => {
-        if (selectedMaturity === m.key) return;
-        selectedMaturity = m.key;
+        if (selectedMaturity === key) return;
+        selectedMaturity = key;
         onChange();
       });
       div.append(btn);
+    }
+    return div;
+  }
+
+  // 겹쳐보기 모드에서만 보이는, 어떤 선이 어떤 만기인지 알려주는 작은 범례
+  function buildLineLegend() {
+    const div = make("div", "strategy-line-legend");
+    for (const m of MATURITIES) {
+      const span = make("span");
+      const swatch = make("i");
+      swatch.style.background = m.color;
+      span.append(swatch, document.createTextNode(t(`strategy.maturity.${m.key}`)));
+      div.append(span);
     }
     return div;
   }
@@ -170,17 +184,35 @@
     return [min - pad, max + pad];
   }
 
-  // ── 시장 하나의 차트를 그린다 ───────────────────────
-  function buildChart(market, marketData, opinionRows, maturity) {
-    const primary = marketData.series?.[maturity[market]];
-    if (!primary) return null;
-    const chartStart = toTs(CHART_START_DATE);
-    let points = primary.points.map((p) => ({ ts: toTs(p.date), value: p.value })).filter((p) => p.ts >= chartStart);
-    if (!points.length) return null;
+  function nearestPoint(points, ts) {
+    let nearest = points[0];
+    for (const p of points) {
+      if (Math.abs(p.ts - ts) < Math.abs(nearest.ts - ts)) nearest = p;
+    }
+    return nearest;
+  }
 
-    const tsMin = points[0].ts;
-    const tsMax = points[points.length - 1].ts;
-    const [vMin, vMax] = niceRange(points.map((p) => p.value));
+  // ── 시장 하나의 차트를 그린다. mode 가 "overlay" 면 기준금리·단기·장기를 겹쳐 그린다 ──
+  function buildChart(market, marketData, opinionRows, mode) {
+    const chartStart = toTs(CHART_START_DATE);
+    const activeMaturities = mode === "overlay" ? MATURITIES : MATURITIES.filter((m) => m.key === mode);
+    const activeSeries = activeMaturities
+      .map((m) => {
+        const raw = marketData.series?.[m[market]];
+        if (!raw) return null;
+        const points = raw.points.map((p) => ({ ts: toTs(p.date), value: p.value })).filter((p) => p.ts >= chartStart);
+        return points.length ? { key: m.key, color: m.color, points } : null;
+      })
+      .filter(Boolean);
+    if (!activeSeries.length) return null;
+
+    // 호버 시 x 위치를 맞추는 기준: 점이 가장 촘촘한(보통 일별) 시리즈
+    const refSeries = activeSeries.reduce((a, b) => (b.points.length > a.points.length ? b : a));
+
+    const allPoints = activeSeries.flatMap((s) => s.points);
+    const tsMin = Math.min(...allPoints.map((p) => p.ts));
+    const tsMax = Math.max(...allPoints.map((p) => p.ts));
+    const [vMin, vMax] = niceRange(allPoints.map((p) => p.value));
 
     const x0 = MARGIN.left, x1 = CHART_W - MARGIN.right;
     const y0 = MARGIN.top, y1 = CHART_H - MARGIN.bottom;
@@ -229,14 +261,20 @@
       svg.append(label);
     }
 
-    // 금리 선
-    const d = points.map((p, i) => `${i === 0 ? "M" : "L"}${xScale(p.ts).toFixed(1)},${yScale(p.value).toFixed(1)}`).join(" ");
-    svg.append(svgEl("path", { class: "rate-line", d }));
+    // 금리 선 (겹쳐보기면 만기마다 한 줄, 아니면 한 줄)
+    for (const s of activeSeries) {
+      const d = s.points.map((p, i) => `${i === 0 ? "M" : "L"}${xScale(p.ts).toFixed(1)},${yScale(p.value).toFixed(1)}`).join(" ");
+      svg.append(svgEl("path", { class: "rate-line", d, style: `stroke:${s.color}` }));
+    }
 
-    // 호버: 세로선 + 점
+    // 호버: 세로선 + 시리즈마다 점 하나씩
     const hoverLine = svgEl("line", { class: "hover-line", y1: y0, y2: y1 });
-    const hoverDot = svgEl("circle", { class: "hover-dot", r: 3 });
-    svg.append(hoverLine, hoverDot);
+    svg.append(hoverLine);
+    const hoverDots = activeSeries.map((s) => {
+      const dot = svgEl("circle", { class: "hover-dot", r: 3, style: `stroke:${s.color}` });
+      svg.append(dot);
+      return dot;
+    });
 
     const wrap = make("div", "strategy-chart-wrap");
     const tooltip = make("div", "strategy-tooltip");
@@ -250,33 +288,45 @@
 
       const vbX = (px / rect.width) * CHART_W;
       const ts = tsMin + ((vbX - x0) / (x1 - x0)) * (tsMax - tsMin);
-      let nearest = points[0];
-      for (const p of points) {
-        if (Math.abs(p.ts - ts) < Math.abs(nearest.ts - ts)) nearest = p;
-      }
+      const nearestRef = nearestPoint(refSeries.points, ts);
 
-      const nx = xScale(nearest.ts), ny = yScale(nearest.value);
+      const nx = xScale(nearestRef.ts);
       hoverLine.setAttribute("x1", nx);
       hoverLine.setAttribute("x2", nx);
       hoverLine.style.opacity = 1;
-      hoverDot.setAttribute("cx", nx);
-      hoverDot.setAttribute("cy", ny);
-      hoverDot.style.opacity = 1;
 
-      const opinion = opinionAt(bands, nearest.ts);
-      tooltip.textContent = t("strategy.tooltip", {
-        date: formatTooltipTs(nearest.ts),
-        value: nearest.value.toFixed(2),
-        opinion: opinion === null ? "-" : t(`view.${opinion}`),
+      const opinion = opinionAt(bands, nearestRef.ts);
+      const opinionLabel = opinion === null ? "-" : t(`view.${opinion}`);
+
+      activeSeries.forEach((s, i) => {
+        const p = nearestPoint(s.points, nearestRef.ts);
+        hoverDots[i].setAttribute("cx", xScale(p.ts));
+        hoverDots[i].setAttribute("cy", yScale(p.value));
+        hoverDots[i].style.opacity = 1;
       });
+
+      if (mode === "overlay") {
+        const lines = [t("strategy.tooltip.header", { date: formatTooltipTs(nearestRef.ts), opinion: opinionLabel })];
+        for (const s of activeSeries) {
+          const p = nearestPoint(s.points, nearestRef.ts);
+          lines.push(t("strategy.tooltip.line", { maturity: t(`strategy.maturity.${s.key}`), value: p.value.toFixed(2) }));
+        }
+        tooltip.textContent = lines.join("\n");
+      } else {
+        tooltip.textContent = t("strategy.tooltip", {
+          date: formatTooltipTs(nearestRef.ts),
+          value: nearestRef.value.toFixed(2),
+          opinion: opinionLabel,
+        });
+      }
       tooltip.style.opacity = 1;
       tooltip.style.left = `${(nx / CHART_W) * rect.width}px`;
-      tooltip.style.top = `${(ny / CHART_H) * rect.height}px`;
+      tooltip.style.top = `${(yScale(nearestRef.value) / CHART_H) * rect.height}px`;
     }
 
     function hide() {
       hoverLine.style.opacity = 0;
-      hoverDot.style.opacity = 0;
+      hoverDots.forEach((dot) => (dot.style.opacity = 0));
       tooltip.style.opacity = 0;
     }
 
@@ -292,7 +342,9 @@
     svg.addEventListener("touchend", hide);
 
     const section = make("div", "strategy-chart");
-    section.append(make("h3", "", title), wrap);
+    section.append(make("h3", "", title));
+    if (mode === "overlay") section.append(buildLineLegend());
+    section.append(wrap);
     return section;
   }
 
@@ -304,13 +356,12 @@
       body.append(p);
       return;
     }
-    const maturity = MATURITIES.find((m) => m.key === selectedMaturity) || MATURITIES[MATURITIES.length - 1];
     const wrap = make("div", "strategy");
     wrap.append(buildDefs(), buildLegend(), buildToggle(render));
     for (const market of MARKETS) {
       const marketData = data.rates?.[market];
       if (!marketData) continue;
-      const chart = buildChart(market, marketData, data.opinions?.rows || [], maturity);
+      const chart = buildChart(market, marketData, data.opinions?.rows || [], selectedMaturity);
       if (chart) wrap.append(chart);
     }
     body.append(wrap);

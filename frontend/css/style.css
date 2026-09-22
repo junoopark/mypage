@@ -377,10 +377,12 @@ body.frame {
 }
 .vp-note { flex: none; font-size: 11.5px; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 3px; line-height: 1.4; }
 
-/* 시장별 핵심 코멘트: 표는 고정, 이 목록만 넘치면 타일 안에서 스크롤 */
+/* 시장별 핵심 코멘트: 표는 고정, 이 목록만 넘치면 타일 안에서 스크롤.
+   미국·한국 사이 위아래 여백과 구분선을 넓혀 공간을 뚜렷이 나눈다.
+   (li 를 flex:1 로 나누면 좁은 화면의 grid auto-row 계산에서 0 높이로 접히는 문제가 있어 일반 목록 흐름을 유지한다) */
 .comments { list-style: none; margin: 14px 0 0; padding: 0; flex: 1; min-height: 0; overflow: auto; font-size: 13px; line-height: 1.45; }
-.comments li { padding: 3px 0; border-top: 1px solid var(--line); }
-.comments li:first-child { border-top: 0; }
+.comments li { padding: 10px 0; border-top: 1px solid var(--line); }
+.comments li:first-child { border-top: 0; padding-top: 0; }
 .comments strong { margin-right: 4px; color: var(--brand); }
 
 /* ── 「투자 전략 히스토리」 타일 ───────────────────────── */
@@ -406,7 +408,7 @@ body.frame {
 .strategy-toggle button:hover { border-color: var(--brand); color: var(--brand); }
 .strategy-toggle button[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
 
-.strategy-chart h3 { font-size: 12.5px; font-weight: 700; margin-bottom: 4px; }
+.strategy-chart h3 { font-size: 12.5px; font-weight: 700; margin-bottom: 4px; text-align: center; }
 .strategy-chart-wrap { position: relative; }
 .strategy-svg { display: block; width: 100%; height: auto; aspect-ratio: 600 / 200; }
 .strategy-svg .axis-line { stroke: var(--line); stroke-width: 1; }
@@ -414,6 +416,11 @@ body.frame {
 .strategy-svg .rate-line { fill: none; stroke: var(--ink); stroke-width: 1.6; }
 .strategy-svg .hover-line { stroke: var(--ink-soft); stroke-width: 1; stroke-dasharray: 3 2; opacity: 0; pointer-events: none; }
 .strategy-svg .hover-dot { fill: var(--card-bg); stroke: var(--ink); stroke-width: 1.6; opacity: 0; pointer-events: none; }
+
+/* 겹쳐보기 모드에서만 나오는, 선 색과 만기를 짝지어 보여주는 작은 범례 */
+.strategy-line-legend { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 4px; font-size: 11px; color: var(--ink-soft); }
+.strategy-line-legend span { display: flex; align-items: center; gap: 4px; }
+.strategy-line-legend i { display: inline-block; width: 10px; height: 2px; border-radius: 1px; }
 
 .strategy-tooltip {
   position: absolute;
@@ -425,7 +432,8 @@ body.frame {
   border-radius: 6px;
   padding: 4px 8px;
   font-size: 11.5px;
-  white-space: nowrap;
+  white-space: pre-line;
+  text-align: center;
   box-shadow: 0 4px 12px var(--shadow);
   transition: opacity 0.1s;
 }

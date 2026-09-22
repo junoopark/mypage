@@ -13,7 +13,8 @@
         "market": "KR",
         "opinion": -1,
         "asOf": "2026-05-28",
-        "asOfUrl": ""
+        "asOfUrl": "",
+        "prevOpinion": 0
       }
     ]
   },
