@@ -7,7 +7,14 @@
 (function () {
   const STRATEGY_URL = `${API_BASE_URL}/strategy`;
   const MARKETS = ["US", "KR"]; // 차트 순서
-  const PRIMARY_SERIES = { US: "y10", KR: "ktb10y" }; // 듀레이션 대표 지표(10년물)만 그린다
+  const CHART_START_DATE = "2026-01-01"; // 금리 차트는 이 날짜부터 그린다
+  // 만기 토글: key 는 화면 상태, US/KR 은 시장마다 다른 series 키로 연결한다
+  const MATURITIES = [
+    { key: "base", US: "base", KR: "base" },
+    { key: "short", US: "y2", KR: "ktb3y" },
+    { key: "long", US: "y10", KR: "ktb10y" },
+  ];
+  let selectedMaturity = "long"; // 기본값: 10년(듀레이션 대표 지표)
   const VIEW_MIN = -2;
   const VIEW_MAX = 2;
   const NS = "http://www.w3.org/2000/svg";
@@ -46,13 +53,13 @@
   function fillForOpinion(v) {
     if (v === -2) return "var(--neg-strong)";
     if (v === -1) return "url(#strategy-hatch-neg)";
-    if (v === 0) return "url(#strategy-dots-neu)";
+    if (v === 0) return "var(--neu-soft)"; // 중립은 무늬 없이 회색 음영만
     if (v === 1) return "url(#strategy-hatch-pos)";
     if (v === 2) return "var(--pos-strong)";
     return "transparent";
   }
 
-  // 차트에 한 번만 넣는 패턴(빗금·점) 정의. url(#id) 로 다른 svg 에서도 참조된다
+  // 차트에 한 번만 넣는 빗금 패턴 정의. url(#id) 로 다른 svg 에서도 참조된다
   function buildDefs() {
     const svg = svgEl("svg", { width: 0, height: 0, "aria-hidden": "true", style: "position:absolute" });
     const defs = svgEl("defs", {});
@@ -62,17 +69,7 @@
       p.append(svgEl("path", { d: "M0,6 L6,0", stroke: ink, "stroke-width": 1.2 }));
       return p;
     };
-    const dots = (id, soft, ink) => {
-      const p = svgEl("pattern", { id, width: 6, height: 6, patternUnits: "userSpaceOnUse" });
-      p.append(svgEl("rect", { width: 6, height: 6, fill: soft }));
-      p.append(svgEl("circle", { cx: 3, cy: 3, r: 1, fill: ink }));
-      return p;
-    };
-    defs.append(
-      hatch("strategy-hatch-neg", "var(--neg-soft)", "var(--neg)"),
-      dots("strategy-dots-neu", "var(--neu-soft)", "var(--neu)"),
-      hatch("strategy-hatch-pos", "var(--pos-soft)", "var(--pos)")
-    );
+    defs.append(hatch("strategy-hatch-neg", "var(--neg-soft)", "var(--neg)"), hatch("strategy-hatch-pos", "var(--pos-soft)", "var(--pos)"));
     svg.append(defs);
     return svg;
   }
@@ -83,19 +80,37 @@
     for (let v = VIEW_MIN; v <= VIEW_MAX; v++) {
       const li = make("li");
       const swatch = make("span", "swatch");
-      swatch.style.background = fillForOpinion(v).startsWith("url")
-        ? "none"
-        : fillForOpinion(v);
-      if (fillForOpinion(v).startsWith("url")) {
+      const fill = fillForOpinion(v);
+      if (fill.startsWith("url")) {
         // CSS background 는 svg pattern 을 못 그리므로 작은 svg 로 대신한다
         const mini = svgEl("svg", { width: 12, height: 12 });
-        mini.append(svgEl("rect", { width: 12, height: 12, fill: fillForOpinion(v) }));
+        mini.append(svgEl("rect", { width: 12, height: 12, fill }));
         swatch.append(mini);
+      } else {
+        swatch.style.background = fill;
       }
       li.append(swatch, document.createTextNode(t(`view.${v}`)));
       ul.append(li);
     }
     return ul;
+  }
+
+  // ── 만기 토글: 기준금리 · 단기(2·3년) · 10년 ─────────
+  function buildToggle(onChange) {
+    const div = make("div", "strategy-toggle");
+    div.setAttribute("role", "group");
+    for (const m of MATURITIES) {
+      const btn = make("button", "", t(`strategy.maturity.${m.key}`));
+      btn.type = "button";
+      btn.setAttribute("aria-pressed", String(m.key === selectedMaturity));
+      btn.addEventListener("click", () => {
+        if (selectedMaturity === m.key) return;
+        selectedMaturity = m.key;
+        onChange();
+      });
+      div.append(btn);
+    }
+    return div;
   }
 
   // 시장의 의견 이력을 [{startTs, endTs, opinion}] 구간으로 바꾼다.
@@ -135,14 +150,14 @@
     return d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
   }
 
-  // 2개월 간격으로 x축 눈금(월초) 목록을 만든다
+  // 2개월 간격으로 x축 눈금(월초) 목록을 만든다. 첫 달은 tsMin 이 1일이 아니어도 왼쪽 끝에 표시한다
   function monthTicks(tsMin, tsMax) {
     const start = new Date(tsMin);
     const first = Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), 1);
     const ticks = [];
     let i = 0;
     for (let ts = first; ts <= tsMax; ts = Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + (++i), 1)) {
-      if (ts >= tsMin && i % 2 === 0) ticks.push(ts);
+      if (i % 2 === 0) ticks.push(Math.max(ts, tsMin));
     }
     return ticks;
   }
@@ -155,19 +170,12 @@
   }
 
   // ── 시장 하나의 차트를 그린다 ───────────────────────
-  function buildChart(market, marketData, opinionRows) {
-    const primary = marketData.series?.[PRIMARY_SERIES[market]];
+  function buildChart(market, marketData, opinionRows, maturity) {
+    const primary = marketData.series?.[maturity[market]];
     if (!primary) return null;
-    let points = primary.points.map((p) => ({ ts: toTs(p.date), value: p.value }));
+    const chartStart = toTs(CHART_START_DATE);
+    let points = primary.points.map((p) => ({ ts: toTs(p.date), value: p.value })).filter((p) => p.ts >= chartStart);
     if (!points.length) return null;
-
-    // 의견 이력이 있으면 그 시작일부터만 보여준다 (그 전 구간은 칠할 의견이 없어 비어 보이므로)
-    const opinionTsList = opinionRows.filter((r) => r.market === market && isView(r.opinion)).map((r) => toTs(r.asOf));
-    if (opinionTsList.length) {
-      const firstOpinionTs = Math.min(...opinionTsList);
-      const trimmed = points.filter((p) => p.ts >= firstOpinionTs);
-      if (trimmed.length) points = trimmed;
-    }
 
     const tsMin = points[0].ts;
     const tsMax = points[points.length - 1].ts;
@@ -179,12 +187,13 @@
     const yScale = (v) => y1 - ((v - vMin) / (vMax - vMin || 1)) * (y1 - y0);
 
     const bands = buildBands(opinionRows, market, tsMin, tsMax);
+    const title = t("strategy.chart.title", { market: t(`market.${market}`), maturity: t(`strategy.maturity.${selectedMaturity}.title`) });
 
     const svg = svgEl("svg", {
       class: "strategy-svg",
       viewBox: `0 0 ${CHART_W} ${CHART_H}`,
       role: "img",
-      "aria-label": t(`strategy.chart.title.${market}`),
+      "aria-label": title,
     });
 
     // 배경 음영: 투자의견 구간
@@ -282,7 +291,7 @@
     svg.addEventListener("touchend", hide);
 
     const section = make("div", "strategy-chart");
-    section.append(make("h3", "", t(`strategy.chart.title.${market}`)), wrap);
+    section.append(make("h3", "", title), wrap);
     return section;
   }
 
@@ -294,12 +303,13 @@
       body.append(p);
       return;
     }
+    const maturity = MATURITIES.find((m) => m.key === selectedMaturity) || MATURITIES[MATURITIES.length - 1];
     const wrap = make("div", "strategy");
-    wrap.append(buildDefs(), buildLegend());
+    wrap.append(buildDefs(), buildLegend(), buildToggle(render));
     for (const market of MARKETS) {
       const marketData = data.rates?.[market];
       if (!marketData) continue;
-      const chart = buildChart(market, marketData, data.opinions?.rows || []);
+      const chart = buildChart(market, marketData, data.opinions?.rows || [], maturity);
       if (chart) wrap.append(chart);
     }
     body.append(wrap);

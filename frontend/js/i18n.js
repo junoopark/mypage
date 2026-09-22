@@ -49,8 +49,13 @@ const I18N = {
     "viewpoint.error": "데이터를 불러오지 못했습니다",
 
     // 「투자 전략 히스토리」 타일
-    "strategy.chart.title.US": "미국 10년 금리 및 듀레이션 전략",
-    "strategy.chart.title.KR": "한국 10년 금리 및 듀레이션 전략",
+    "strategy.chart.title": "{market} {maturity} 및 듀레이션 전략",
+    "strategy.maturity.base": "기준금리",
+    "strategy.maturity.short": "단기(2·3년)",
+    "strategy.maturity.long": "10년",
+    "strategy.maturity.base.title": "기준금리",
+    "strategy.maturity.short.title": "2·3년 금리",
+    "strategy.maturity.long.title": "10년 금리",
     "strategy.tooltip": "{date} · {value}% · {opinion}",
     "strategy.error": "데이터를 불러오지 못했습니다",
 
@@ -163,8 +168,13 @@ const I18N = {
     "viewpoint.error": "Failed to load data",
 
     // "Strategy Track Record" tile
-    "strategy.chart.title.US": "US 10Y Rate & Duration Strategy",
-    "strategy.chart.title.KR": "Korea 10Y Rate & Duration Strategy",
+    "strategy.chart.title": "{market} {maturity} & Duration Strategy",
+    "strategy.maturity.base": "Policy rate",
+    "strategy.maturity.short": "Short (2Y/3Y)",
+    "strategy.maturity.long": "10Y",
+    "strategy.maturity.base.title": "Policy Rate",
+    "strategy.maturity.short.title": "2Y/3Y Rate",
+    "strategy.maturity.long.title": "10Y Rate",
     "strategy.tooltip": "{date} · {value}% · {opinion}",
     "strategy.error": "Failed to load data",
 
