@@ -11,14 +11,14 @@ from fredapi import Fred
 
 
 class FredClient:
-    # key → FRED 시리즈 코드
+    # key → FRED 시리즈 코드 (전부 일별)
     SERIES = {
-        "base": "FEDFUNDS",  # 미국 기준금리(실효 연방기금금리, 월별)
+        "base": "DFEDTARU",  # 미국 기준금리 목표상단(Federal Funds Target Range - Upper Limit)
         "y2": "DGS2",        # 미국 2년 국채
         "y10": "DGS10",      # 미국 10년 국채
     }
     LABELS = {
-        "base": "미국 기준금리",
+        "base": "미국 기준금리(목표상단)",
         "y2": "미국 2년",
         "y10": "미국 10년",
     }

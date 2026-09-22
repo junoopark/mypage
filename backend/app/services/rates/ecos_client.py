@@ -20,9 +20,9 @@ def _to_float(value) -> float:
 
 
 class EcosClient:
-    # key → (stat_code, item_code, 주기, 한글명)
+    # key → (stat_code, item_code, 주기, 한글명). 기준금리도 일별로 받는다 (변경일 사이는 ECOS가 직전 값으로 채워 돌려준다)
     SERIES = {
-        "base":   ("722Y001", "0101000",   "M", "한국 기준금리"),
+        "base":   ("722Y001", "0101000",   "D", "한국 기준금리"),
         "ktb3y":  ("817Y002", "010200000", "D", "한국 국고채 3년"),
         "ktb10y": ("817Y002", "010210000", "D", "한국 국고채 10년"),
     }
