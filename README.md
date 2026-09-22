@@ -84,8 +84,11 @@ cd backend
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
+copy .env.example .env
 fastapi dev app/main.py
 ```
+
+`.env`는 커밋되지 않으므로 PC마다 새로 만들고, `FRED_API_KEY`·`ECOS_API_KEY` 값을 채웁니다(발급 방법은 `.env.example` 주석 참고, 값은 `G:\내 드라이브\coding\shared\api_keys.env`에도 있습니다). 없으면 다른 API는 그대로 동작하고 `/strategy`만 502를 반환합니다.
 
 **프론트엔드** — `http://127.0.0.1:5500`
 
