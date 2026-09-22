@@ -66,6 +66,10 @@ const I18N = {
     "profile.period.present": "현재",
     "profile.error": "데이터를 불러오지 못했습니다",
 
+    // 「언론/방송」 타일
+    "media.empty": "아직 등록된 영상이 없습니다",
+    "media.error": "데이터를 불러오지 못했습니다",
+
     // 소개 페이지
     "index.title": "박준우 — 개인 소개",
     "index.desc": "박준우의 개인 소개 페이지",
@@ -183,6 +187,10 @@ const I18N = {
     "profile.section.links": "Links",
     "profile.period.present": "Present",
     "profile.error": "Failed to load data",
+
+    // "Media Appearance" tile
+    "media.empty": "No videos yet",
+    "media.error": "Failed to load data",
 
     // About page
     "index.title": "Junoo Park — About",

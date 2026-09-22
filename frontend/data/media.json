@@ -1,0 +1,25 @@
+{
+  "_comment": "database/seed/media.csv 로부터 생성 (scripts/build_media.py). 직접 고치지 않는다.",
+  "items": [
+    {
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "videoId": "dQw4w9WgXcQ",
+      "title_ko": "Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)",
+      "title_en": "Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)",
+      "date": "2009-10-24",
+      "channel": "Rick Astley",
+      "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+      "thumbnailHq": "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+      "videoId": "jNQXAC9IVRw",
+      "title_ko": "Me at the zoo",
+      "title_en": "Me at the zoo",
+      "date": "2005-04-23",
+      "channel": "jawed",
+      "thumbnail": "https://img.youtube.com/vi/jNQXAC9IVRw/hqdefault.jpg",
+      "thumbnailHq": "https://img.youtube.com/vi/jNQXAC9IVRw/maxresdefault.jpg"
+    }
+  ]
+}
