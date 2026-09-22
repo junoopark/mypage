@@ -8,11 +8,12 @@
   const STRATEGY_URL = `${API_BASE_URL}/strategy`;
   const MARKETS = ["US", "KR"]; // 차트 순서
   const CHART_START_DATE = "2026-01-01"; // 금리 차트는 이 날짜부터 그린다
-  // 만기 토글: key 는 화면 상태, US/KR 은 시장마다 다른 series 키로 연결한다. color 는 겹쳐보기 모드의 선 색
+  // 만기 토글: key 는 화면 상태, US/KR 은 시장마다 다른 series 키로 연결한다.
+  // 선은 색 대신 검정/회색 + 실선/점선으로 구분한다 (보고서 인쇄에서도 구분되도록)
   const MATURITIES = [
-    { key: "base", US: "base", KR: "base", color: "var(--brand)" },
-    { key: "short", US: "y2", KR: "ktb3y", color: "var(--loading-line)" },
-    { key: "long", US: "y10", KR: "ktb10y", color: "var(--ink)" },
+    { key: "base", US: "base", KR: "base", color: "var(--ink-soft)", dash: "5 3" },
+    { key: "short", US: "y2", KR: "ktb3y", color: "var(--ink-soft)", dash: null },
+    { key: "long", US: "y10", KR: "ktb10y", color: "var(--ink)", dash: null },
   ];
   // 선택된 만기 집합(복수 선택 가능) — 기본값: 장기(10년) 하나. 두 개 이상 고르면 자동으로 겹쳐 그린다
   let selectedMaturities = new Set(["long"]);
@@ -125,7 +126,9 @@
     for (const m of activeMaturities) {
       const span = make("span");
       const swatch = make("i");
-      swatch.style.background = m.color;
+      swatch.style.background = m.dash
+        ? `repeating-linear-gradient(to right, ${m.color} 0 3px, transparent 3px 6px)`
+        : m.color;
       span.append(swatch, document.createTextNode(t(`strategy.maturity.${m.key}`)));
       div.append(span);
     }
@@ -205,7 +208,7 @@
         const raw = marketData.series?.[m[market]];
         if (!raw) return null;
         const points = raw.points.map((p) => ({ ts: toTs(p.date), value: p.value })).filter((p) => p.ts >= chartStart);
-        return points.length ? { key: m.key, color: m.color, points } : null;
+        return points.length ? { key: m.key, color: m.color, dash: m.dash, points } : null;
       })
       .filter(Boolean);
     if (!activeSeries.length) return null;
@@ -268,7 +271,7 @@
     // 금리 선 (겹쳐보기면 만기마다 한 줄, 아니면 한 줄)
     for (const s of activeSeries) {
       const d = s.points.map((p, i) => `${i === 0 ? "M" : "L"}${xScale(p.ts).toFixed(1)},${yScale(p.value).toFixed(1)}`).join(" ");
-      svg.append(svgEl("path", { class: "rate-line", d, style: `stroke:${s.color}` }));
+      svg.append(svgEl("path", { class: "rate-line", d, style: `stroke:${s.color};stroke-dasharray:${s.dash || "none"}` }));
     }
 
     // 호버: 세로선 + 시리즈마다 점 하나씩
