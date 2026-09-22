@@ -1,0 +1,143 @@
+{
+  "_comment": "Profile.pdf(LinkedIn 내보내기) 기준. 나중에 API(GET /profile)로 교체.",
+  "basic": {
+    "name_ko": [
+      "박준우, CFA"
+    ],
+    "name_en": [
+      "Junoo Park, CFA"
+    ],
+    "title_ko": [
+      "채권전략가 · 하나증권",
+      "서울, 대한민국"
+    ],
+    "title_en": [
+      "Fixed Income Strategist, Hana Securities",
+      "Seoul, South Korea"
+    ],
+    "bio_ko": [],
+    "bio_en": []
+  },
+  "career": [
+    {
+      "org_ko": "하나증권",
+      "org_en": "Hana Securities",
+      "role_ko": "채권전략가",
+      "role_en": "Fixed Income Strategist",
+      "start": "2025-09",
+      "end": null,
+      "desc_ko": [],
+      "desc_en": []
+    },
+    {
+      "org_ko": "KB증권",
+      "org_en": "KB Securities",
+      "role_ko": "글로벌 채권전략가",
+      "role_en": "Global Fixed Income Strategist",
+      "start": "2019-08",
+      "end": "2025-09",
+      "desc_ko": [
+        "리서치본부",
+        "글로벌 채권전략가"
+      ],
+      "desc_en": [
+        "Research Division",
+        "Global Fixed Income Strategist"
+      ]
+    },
+    {
+      "org_ko": "한화손해보험",
+      "org_en": "Hanwha General Insurance",
+      "role_ko": "어소시에이트",
+      "role_en": "Associate",
+      "start": "2017-01",
+      "end": "2019-07",
+      "desc_ko": [
+        "자산운용본부",
+        "LDI 전략",
+        "글로벌 금리 리서치",
+        "운용성과 평가"
+      ],
+      "desc_en": [
+        "Asset Management Division",
+        "LDI Strategy",
+        "Global Rates Research",
+        "Performance Evaluation"
+      ]
+    },
+    {
+      "org_ko": "국제금융센터(KCIF)",
+      "org_en": "Korea Center for International Finance (KCIF)",
+      "role_ko": "인턴",
+      "role_en": "Intern",
+      "start": "2016-06",
+      "end": "2016-12",
+      "desc_ko": [
+        "글로벌모니터링실",
+        "데일리 플래시 뉴스"
+      ],
+      "desc_en": [
+        "Global Monitoring Dept.",
+        "Daily Flash News"
+      ]
+    },
+    {
+      "org_ko": "대한민국 육군",
+      "org_en": "Republic of Korea Army",
+      "role_ko": "병장(카투사)",
+      "role_en": "Sergeant (KATUSA)",
+      "start": "2012-05",
+      "end": "2014-02",
+      "desc_ko": [
+        "카투사 · 주한미군 배속 근무"
+      ],
+      "desc_en": [
+        "KATUSA · Korean Augmentation To the US Army"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school_ko": "KAIST 경영대학",
+      "school_en": "KAIST College of Business",
+      "degree_ko": "경영학 석사(MBA)",
+      "degree_en": "Master of Business Administration (MBA)",
+      "start": "2025",
+      "end": "2027"
+    },
+    {
+      "school_ko": "성균관대학교",
+      "school_en": "Sungkyunkwan University (SKKU)",
+      "degree_ko": "",
+      "degree_en": "",
+      "start": "2011-03",
+      "end": "2017-02"
+    }
+  ],
+  "certifications": [
+    {
+      "name_ko": "공인재무분석사(CFA)",
+      "name_en": "Chartered Financial Analyst® (CFA)",
+      "issuer_ko": "CFA Institute",
+      "issuer_en": "CFA Institute",
+      "year": ""
+    }
+  ],
+  "links": [
+    {
+      "label_ko": "이메일",
+      "label_en": "Email",
+      "url": "mailto:junoopark@hanafn.com"
+    },
+    {
+      "label_ko": "LinkedIn",
+      "label_en": "LinkedIn",
+      "url": "https://www.linkedin.com/in/junoopark-043a43153"
+    },
+    {
+      "label_ko": "GitHub",
+      "label_en": "GitHub",
+      "url": "https://github.com/junoopark"
+    }
+  ]
+}
