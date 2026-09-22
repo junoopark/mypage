@@ -5,8 +5,9 @@
 // opinions.rows 는 「매크로 및 금리 전망」 타일의 이력(전체)과 같은 표를 공유한다.
 
 (function () {
-  const STRATEGY_URL = "data/strategy.json";
+  const STRATEGY_URL = `${API_BASE_URL}/strategy`;
   const MARKETS = ["US", "KR"]; // 차트 순서
+  const PRIMARY_SERIES = { US: "y10", KR: "ktb10y" }; // 듀레이션 대표 지표(10년물)만 그린다
   const VIEW_MIN = -2;
   const VIEW_MAX = 2;
   const NS = "http://www.w3.org/2000/svg";
@@ -155,7 +156,9 @@
 
   // ── 시장 하나의 차트를 그린다 ───────────────────────
   function buildChart(market, marketData, opinionRows) {
-    const points = marketData.points.map((p) => ({ ts: toTs(p.date), value: p.value }));
+    const primary = marketData.series?.[PRIMARY_SERIES[market]];
+    if (!primary) return null;
+    const points = primary.points.map((p) => ({ ts: toTs(p.date), value: p.value }));
     if (!points.length) return null;
 
     const tsMin = points[0].ts;

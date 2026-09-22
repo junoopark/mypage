@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import date, datetime
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -21,3 +22,33 @@ class GuestbookOut(BaseModel):
     name: str
     message: str
     created_at: datetime
+
+
+class RatePoint(BaseModel):
+    date: date
+    value: float
+
+
+class RateSeries(BaseModel):
+    label: str
+    points: list[RatePoint]
+
+
+class MarketRates(BaseModel):
+    unit: str
+    series: dict[str, RateSeries]
+
+
+class OpinionRow(BaseModel):
+    market: Literal["US", "KR"]
+    asOf: date
+    opinion: int = Field(ge=-2, le=2)
+
+
+class Opinions(BaseModel):
+    rows: list[OpinionRow]
+
+
+class Strategy(BaseModel):
+    rates: dict[Literal["US", "KR"], MarketRates]
+    opinions: Opinions

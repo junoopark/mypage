@@ -1,9 +1,13 @@
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()  # 로컬 개발용. backend/.env 가 있으면 읽어온다 (배포는 Render 환경변수를 쓴다)
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import guestbook, profile
+from app.routers import guestbook, profile, strategy
 
 app = FastAPI(title="Junoo Park's Page API")
 
@@ -20,6 +24,7 @@ app.add_middleware(
 
 app.include_router(profile.router)
 app.include_router(guestbook.router)
+app.include_router(strategy.router)
 
 
 @app.get("/")
