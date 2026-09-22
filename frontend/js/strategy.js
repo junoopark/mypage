@@ -158,8 +158,16 @@
   function buildChart(market, marketData, opinionRows) {
     const primary = marketData.series?.[PRIMARY_SERIES[market]];
     if (!primary) return null;
-    const points = primary.points.map((p) => ({ ts: toTs(p.date), value: p.value }));
+    let points = primary.points.map((p) => ({ ts: toTs(p.date), value: p.value }));
     if (!points.length) return null;
+
+    // 의견 이력이 있으면 그 시작일부터만 보여준다 (그 전 구간은 칠할 의견이 없어 비어 보이므로)
+    const opinionTsList = opinionRows.filter((r) => r.market === market && isView(r.opinion)).map((r) => toTs(r.asOf));
+    if (opinionTsList.length) {
+      const firstOpinionTs = Math.min(...opinionTsList);
+      const trimmed = points.filter((p) => p.ts >= firstOpinionTs);
+      if (trimmed.length) points = trimmed;
+    }
 
     const tsMin = points[0].ts;
     const tsMax = points[points.length - 1].ts;
