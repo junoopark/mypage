@@ -106,10 +106,9 @@
       head.append(make("strong", "", valueOf(item, "org") || valueOf(item, "school")));
       const roleOrDegree = valueOf(item, "role") || valueOf(item, "degree");
       if (roleOrDegree) head.append(make("span", "pl-sub", roleOrDegree));
-      li.append(head);
-
       const period = formatPeriod(item.start, item.end);
-      if (period) li.append(make("p", "pl-period", period));
+      if (period) head.append(make("span", "pl-period", period));
+      li.append(head);
 
       if (kind === "career") {
         const descLines = linesOf(item, "desc");

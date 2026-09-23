@@ -468,7 +468,9 @@ body.frame {
 .profile-list li + li { border-top: 1px dashed var(--line); }
 .pl-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
 .pl-sub { color: var(--ink-soft); }
-.pl-period { margin: 1px 0 0; font-size: 12px; color: var(--ink-soft); text-align: right; }
+/* 회사명·직급과 같은 줄, margin-left:auto 로 오른쪽 끝에 붙인다.
+   좁은 화면에서 줄이 넘치면 자연스럽게 다음 줄로 내려간다(flex-wrap) */
+.pl-period { margin-left: auto; font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
 .pl-desc { margin: 2px 0 0; line-height: 1.45; }
 
 .profile-links { list-style: none; padding: 0; margin: 6px 0 0; display: flex; gap: 8px; flex-wrap: wrap; }
