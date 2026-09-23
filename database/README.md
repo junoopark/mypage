@@ -31,8 +31,12 @@ database/
 │   ├─ profile_career.csv
 │   ├─ profile_education.csv
 │   ├─ profile_certifications.csv
-│   └─ profile_links.csv
+│   ├─ profile_links.csv
+│   └─ media.csv
 └─ migrations/         # 스키마 변경 이력 (0001_*.sql, 0002_*.sql …)
+
+scripts/                # CSV → frontend/data/*.json 생성 스크립트
+└─ build_media.py       # media.csv → media.json (유튜브 URL 만으로 제목·날짜·썸네일 자동 조회)
 ```
 
 ## 화면(타일)과 데이터
@@ -46,7 +50,7 @@ database/
 | 우상 | `profile` | 프로필 | Profile | 이름·직함/소속·소개, 경력·학력·자격증·링크 → [설계서](../docs/프로필타일_설계.md) |
 | 좌하 | `reports` | 정기 보고서 | Periodic Reports | (미정) |
 | 중하 | `issues` | 이슈 보고서 | Issue Reports | (미정) |
-| 우하 | `media` | 언론/방송 | Media Appearance | (미정) |
+| 우하 | `media` | 언론/방송 | Media Appearance | 출연 유튜브 영상(URL 만 입력, 제목·날짜·썸네일 자동) → [설계서](../docs/언론방송타일_설계.md) |
 
 ## 앱 코드와의 관계
 
