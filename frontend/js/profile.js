@@ -65,27 +65,29 @@
     const titleLines = linesOf(basic, "title");
     const bioLines = linesOf(basic, "bio");
 
-    if (nameLines.length) {
+    if (nameLines.length || titleLines.length) {
       const row = make("div", "profile-head");
-      const h3 = make("h3", "profile-name");
-      appendLines(h3, nameLines);
-      row.append(h3);
+      const text = make("div", "profile-head-text");
+      if (nameLines.length) {
+        const h3 = make("h3", "profile-name");
+        appendLines(h3, nameLines);
+        text.append(h3);
+      }
+      if (titleLines.length) {
+        const div = make("div", "profile-title");
+        appendLines(div, titleLines);
+        text.append(div);
+      }
+      row.append(text);
       if (basic.avatar) {
         const img = document.createElement("img");
         img.className = "profile-avatar";
         img.src = basic.avatar;
         if (basic.avatar2x) img.srcset = `${basic.avatar} 1x, ${basic.avatar2x} 2x`;
         img.alt = "";
-        img.width = 40;
-        img.height = 40;
         row.append(img);
       }
       frag.append(row);
-    }
-    if (titleLines.length) {
-      const div = make("div", "profile-title");
-      appendLines(div, titleLines);
-      frag.append(div);
     }
     if (bioLines.length) {
       const div = make("div", "profile-bio");

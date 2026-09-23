@@ -441,13 +441,15 @@ body.frame {
 /* ── 「프로필」 타일 ───────────────────────────────────── */
 /* 표(viewpoint)와 달리 내용이 길어질 수 있어, 일반 .tile-body 규칙대로
    타일 전체가 세로로 스크롤된다(별도 overflow 규칙을 두지 않는다). */
-.profile-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.profile-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.profile-head-text { min-width: 0; }
 .profile-name { font-size: 17px; line-height: 1.3; }
 .profile-name p { margin: 0; }
+/* 사진 높이를 이름+직함 텍스트 블록에 맞춘다 (프로필 타일 헤더와 경력 사이) */
 .profile-avatar {
   flex: none;
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--line);
