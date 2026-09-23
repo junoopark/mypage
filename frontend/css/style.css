@@ -441,9 +441,18 @@ body.frame {
 /* ── 「프로필」 타일 ───────────────────────────────────── */
 /* 표(viewpoint)와 달리 내용이 길어질 수 있어, 일반 .tile-body 규칙대로
    타일 전체가 세로로 스크롤된다(별도 overflow 규칙을 두지 않는다). */
+.profile-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .profile-name { font-size: 17px; line-height: 1.3; }
 .profile-name p { margin: 0; }
-.profile-title { margin-top: 2px; font-size: 13px; font-weight: 700; color: var(--brand); line-height: 1.4; }
+.profile-avatar {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+.profile-title { margin-top: 2px; font-size: 11.5px; font-weight: 700; color: var(--brand); line-height: 1.4; }
 .profile-title p { margin: 0; }
 .profile-bio { margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
 .profile-bio p { margin: 0; }
@@ -457,7 +466,7 @@ body.frame {
 .profile-list li + li { border-top: 1px dashed var(--line); }
 .pl-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
 .pl-sub { color: var(--ink-soft); }
-.pl-period { margin: 1px 0 0; font-size: 12px; color: var(--ink-soft); }
+.pl-period { margin: 1px 0 0; font-size: 12px; color: var(--ink-soft); text-align: right; }
 .pl-desc { margin: 2px 0 0; line-height: 1.45; }
 
 .profile-links { list-style: none; padding: 0; margin: 6px 0 0; display: flex; gap: 8px; flex-wrap: wrap; }

@@ -66,9 +66,21 @@
     const bioLines = linesOf(basic, "bio");
 
     if (nameLines.length) {
+      const row = make("div", "profile-head");
       const h3 = make("h3", "profile-name");
       appendLines(h3, nameLines);
-      frag.append(h3);
+      row.append(h3);
+      if (basic.avatar) {
+        const img = document.createElement("img");
+        img.className = "profile-avatar";
+        img.src = basic.avatar;
+        if (basic.avatar2x) img.srcset = `${basic.avatar} 1x, ${basic.avatar2x} 2x`;
+        img.alt = "";
+        img.width = 40;
+        img.height = 40;
+        row.append(img);
+      }
+      frag.append(row);
     }
     if (titleLines.length) {
       const div = make("div", "profile-title");

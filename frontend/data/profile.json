@@ -1,5 +1,5 @@
 {
-  "_comment": "database/seed/profile_*.csv 로부터 생성. 나중에 API(GET /profile)로 교체.",
+  "_comment": "database/seed/profile_*.csv 로부터 생성 (scripts/build_profile.py). 직접 고치지 않는다.",
   "basic": {
     "name_ko": [
       "박준우, CFA"
@@ -8,15 +8,19 @@
       "Junoo Park, CFA"
     ],
     "title_ko": [
-      "채권 Strategist · 하나증권 리서치센터",
+      "채권 Strategist",
+      "하나증권",
       "서울, 대한민국"
     ],
     "title_en": [
-      "Fixed Income Strategist, Research Center Hana Securities",
+      "Fixed Income Strategist",
+      "Hana Securities",
       "Seoul, South Korea"
     ],
     "bio_ko": [],
-    "bio_en": []
+    "bio_en": [],
+    "avatar": "assets/profile.jpg",
+    "avatar2x": "assets/profile@2x.jpg"
   },
   "career": [
     {
@@ -26,8 +30,12 @@
       "role_en": "Fixed Income Strategist",
       "start": "2025-09",
       "end": null,
-      "desc_ko": [],
-      "desc_en": []
+      "desc_ko": [
+        "리서치센터"
+      ],
+      "desc_en": [
+        "Research Center"
+      ]
     },
     {
       "org_ko": "KB증권",
