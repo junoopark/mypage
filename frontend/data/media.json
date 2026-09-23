@@ -2,24 +2,74 @@
   "_comment": "database/seed/media.csv 로부터 생성 (scripts/build_media.py). 직접 고치지 않는다.",
   "items": [
     {
-      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "videoId": "dQw4w9WgXcQ",
-      "title_ko": "Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)",
-      "title_en": "Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)",
-      "date": "2009-10-24",
-      "channel": "Rick Astley",
-      "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-      "thumbnailHq": "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+      "url": "https://www.youtube.com/watch?v=FI8psiUNWx8&t=26s",
+      "videoId": "FI8psiUNWx8",
+      "title_ko": "\"총 3번 인상 예상?!\" 금리 인상 한참 남았다  | 박준우 하나증권 리서치센터 연구위원 [더블 업]",
+      "title_en": "\"총 3번 인상 예상?!\" 금리 인상 한참 남았다  | 박준우 하나증권 리서치센터 연구위원 [더블 업]",
+      "date": "2026-09-16",
+      "channel": "삼프로TV 3PROTV",
+      "thumbnail": "https://img.youtube.com/vi/FI8psiUNWx8/hqdefault.jpg",
+      "thumbnailHq": "https://img.youtube.com/vi/FI8psiUNWx8/maxresdefault.jpg"
     },
     {
-      "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
-      "videoId": "jNQXAC9IVRw",
-      "title_ko": "Me at the zoo",
-      "title_en": "Me at the zoo",
-      "date": "2005-04-23",
-      "channel": "jawed",
-      "thumbnail": "https://img.youtube.com/vi/jNQXAC9IVRw/hqdefault.jpg",
-      "thumbnailHq": "https://img.youtube.com/vi/jNQXAC9IVRw/maxresdefault.jpg"
+      "url": "https://www.youtube.com/watch?v=mjaykPgHfOw&t=23s",
+      "videoId": "mjaykPgHfOw",
+      "title_ko": "금리 동결로 '강한 모멘텀' 올까? | 박준우 하나증권 리서치센터 연구위원 [더블 업]",
+      "title_en": "금리 동결로 '강한 모멘텀' 올까? | 박준우 하나증권 리서치센터 연구위원 [더블 업]",
+      "date": "2026-09-10",
+      "channel": "삼프로TV 3PROTV",
+      "thumbnail": "https://img.youtube.com/vi/mjaykPgHfOw/hqdefault.jpg",
+      "thumbnailHq": "https://img.youtube.com/vi/mjaykPgHfOw/maxresdefault.jpg"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=i_Ec2IdLvgU&t=81s",
+      "videoId": "i_Ec2IdLvgU",
+      "title_ko": "\"우리는 해야 할 일이 있다\" 무슨 뜻일까?  | 박준우 하나증권 리서치센터 연구위원 [더블 업]",
+      "title_en": "\"우리는 해야 할 일이 있다\" 무슨 뜻일까?  | 박준우 하나증권 리서치센터 연구위원 [더블 업]",
+      "date": "2026-08-30",
+      "channel": "삼프로TV 3PROTV",
+      "thumbnail": "https://img.youtube.com/vi/i_Ec2IdLvgU/hqdefault.jpg",
+      "thumbnailHq": "https://img.youtube.com/vi/i_Ec2IdLvgU/maxresdefault.jpg"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=GS7ePT-UMhk&t=761s",
+      "videoId": "GS7ePT-UMhk",
+      "title_ko": "미국, 결국 돈 푼다? 금리 잡기 시작했다 | 박준우 하나증권 리서치센터 연구위원 [더블 업]",
+      "title_en": "미국, 결국 돈 푼다? 금리 잡기 시작했다 | 박준우 하나증권 리서치센터 연구위원 [더블 업]",
+      "date": "2026-08-20",
+      "channel": "삼프로TV 3PROTV",
+      "thumbnail": "https://img.youtube.com/vi/GS7ePT-UMhk/hqdefault.jpg",
+      "thumbnailHq": "https://img.youtube.com/vi/GS7ePT-UMhk/maxresdefault.jpg"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=Z-BfX1eQti4&t=42s",
+      "videoId": "Z-BfX1eQti4",
+      "title_ko": "\"대한민국 회복 모멘텀 세계 최고\" 근데 주가는 왜 이럴까 | 박준우 하나증권 리서치센터 연구위원 [더블 크루]",
+      "title_en": "\"대한민국 회복 모멘텀 세계 최고\" 근데 주가는 왜 이럴까 | 박준우 하나증권 리서치센터 연구위원 [더블 크루]",
+      "date": "2026-07-13",
+      "channel": "삼프로TV 3PROTV",
+      "thumbnail": "https://img.youtube.com/vi/Z-BfX1eQti4/hqdefault.jpg",
+      "thumbnailHq": "https://img.youtube.com/vi/Z-BfX1eQti4/maxresdefault.jpg"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=ag3Q_Ke_CB8&t=437s",
+      "videoId": "ag3Q_Ke_CB8",
+      "title_ko": "26년 국채금리 오를 예정, 연준은 시장을 구할 수 있을까? | 하나증권 리서치센터 글로벌투자분석실 박준우 연구위원 [글로벌 인터뷰]",
+      "title_en": "26년 국채금리 오를 예정, 연준은 시장을 구할 수 있을까? | 하나증권 리서치센터 글로벌투자분석실 박준우 연구위원 [글로벌 인터뷰]",
+      "date": "2025-11-23",
+      "channel": "삼프로TV 3PROTV",
+      "thumbnail": "https://img.youtube.com/vi/ag3Q_Ke_CB8/hqdefault.jpg",
+      "thumbnailHq": "https://img.youtube.com/vi/ag3Q_Ke_CB8/maxresdefault.jpg"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=ml66lKVz-rU&list=PLCCwolEThnnbDmF3zANw7hBTOqDA8Kvon",
+      "videoId": "ml66lKVz-rU",
+      "title_ko": "미국국채 금리, 하반기 전망은?...핵심 요인 전격 분석",
+      "title_en": "미국국채 금리, 하반기 전망은?...핵심 요인 전격 분석",
+      "date": "2025-06-04",
+      "channel": "채권 V",
+      "thumbnail": "https://img.youtube.com/vi/ml66lKVz-rU/hqdefault.jpg",
+      "thumbnailHq": "https://img.youtube.com/vi/ml66lKVz-rU/maxresdefault.jpg"
     }
   ]
 }
