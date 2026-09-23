@@ -381,7 +381,8 @@ body.frame {
    미국·한국 사이 위아래 여백과 구분선을 넓혀 공간을 뚜렷이 나눈다.
    (li 를 flex:1 로 나누면 좁은 화면의 grid auto-row 계산에서 0 높이로 접히는 문제가 있어 일반 목록 흐름을 유지한다) */
 .comments { list-style: none; margin: 14px 0 0; padding: 0; flex: 1; min-height: 0; overflow: auto; font-size: 13px; line-height: 1.45; }
-.comments li { padding: 10px 0; border-top: 1px solid var(--line); }
+/* 코멘트 안의 줄바꿈(\n)을 실제 줄바꿈으로 보여준다 */
+.comments li { padding: 10px 0; border-top: 1px solid var(--line); white-space: pre-line; }
 .comments li:first-child { border-top: 0; padding-top: 0; }
 .comments strong { margin-right: 4px; color: var(--brand); }
 
